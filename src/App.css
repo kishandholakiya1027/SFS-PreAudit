@@ -1,0 +1,149 @@
+.dataTables_wrapper .row:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.dataTables_wrapper .row:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.dataTables_wrapper .row:first-child .mdb-datatable-filter input {
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.dataTable {
+  width: 100%;
+  background-color: #fff;
+}
+
+.dataTable thead:first-child {
+  border-bottom: 2px solid #d2d8dd;
+}
+
+.dataTable thead:last-child {
+  display: none;
+}
+
+.dataTable thead tr th {
+  padding: 10px 0;
+  color: #000;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.dataTable tbody tr:not(:last-child) {
+  border-bottom: 1px solid #e9ecf1;
+}
+
+.dataTable tbody tr td {
+  padding: 10px 0;
+  font-size: 14px;
+  max-width: 100px;
+  line-height: 30px;
+  text-wrap: balance;
+}
+
+.mdb-datatable-filter,
+.dataTables_length {
+  display: none;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.disabled.page-item {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.page-item:not(:first-child) .page-link,
+.page-item:not(:last-child) .page-link {
+  padding: 8px 15px;
+  border-radius: 2px;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 500;
+  width: 36px;
+  color: #c4c4c4;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c4c4c4;
+}
+
+
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+  border: 1px solid #106fec;
+  color: #106fec;
+  padding: 8px 10px;
+}
+
+.page-item .sr-only {
+  display: none;
+}
+
+.active.page-item .page-link {
+  background-color: #106fec;
+  color: #fff;
+  border-color: #106fec;
+}
+
+.page-item {
+  cursor: pointer;
+}
+
+.dataTable tbody tr td[colspan] {
+  text-align: center;
+}
+
+.bgColor {
+  background: linear-gradient(
+    180deg,
+    #6079fd 29.72%,
+    rgba(12, 62, 119, 0) 100%
+  );
+}
+
+.boxBgImage {
+  border-radius: 15px;
+  background: url("./assets/images/Rectangle\ 8.png"),
+    lightgray 50% / cover no-repeat;
+}
+
+.GroupInputRadio input[type="radio"]:checked:before {
+  content: "";
+  display: block;
+  position: relative;
+  top: 3px;
+  left: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: black;
+}
+
+.Mui-active,
+.Mui-completed,
+.MuiStepLabel-labelContainer,
+.Mui-active svg,
+.Mui-completed svg {
+  color: #106fec !important;
+}
+
+.MuiStepConnector-line {
+  border-color: #106fec !important;
+}
