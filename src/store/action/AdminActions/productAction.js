@@ -79,8 +79,8 @@ export const AddManyProduct = (data) => {
         dispatch(GetProduct());
       }
     } catch (error) {
-      toast.error(error.response.data.message);
-      dispatch({ type: PRODUCT_FAIL, payload: error.response.data.message });
+      toast.error(error?.message);
+      dispatch({ type: PRODUCT_FAIL, payload: error?.message });
     }
   };
 };
@@ -93,9 +93,8 @@ export const GetProducts = () => {
         dispatch({ type: ADD_PRODUCT_SUCCESS, payload: MemberData.data.data });
       }
     } catch (error) {
-      // toast.error(error.response.data.message)
-      console.log("Error:", error.response);
-      dispatch({ type: PRODUCT_FAIL, payload: error.response.data.message });
+      console.log("Error:", error);
+      dispatch({ type: PRODUCT_FAIL, payload: error?.message });
     }
   };
 };

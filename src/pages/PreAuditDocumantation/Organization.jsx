@@ -1,10 +1,11 @@
+import { LoaderIcon } from "react-hot-toast";
 import React, { useEffect, useState } from "react";
-import SelectList from "../../components/common/SelectList";
 import { useDispatch, useSelector } from "react-redux";
+import QuertRaise from "../../components/common/QuertRaise";
+import SelectList from "../../components/common/SelectList";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { addDocData, getOneAudit } from "../../store/action/preAuditAction";
-import { LoaderIcon } from "react-hot-toast";
-import QuertRaise from "../../components/common/QuertRaise";
 
 const docs1 = [
   {
@@ -169,6 +170,20 @@ const Organization = () => {
       documents: docs4,
     },
   ]);
+  const [dropdown, setDropdown] = useState([
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+  ]);
 
   const handleChange = (e, link, i) => {
     const { name, value } = e.target;
@@ -189,6 +204,14 @@ const Organization = () => {
         return item;
       });
     });
+  };
+
+  const handleDropDown = (i) => {
+    setDropdown((prev) =>
+      prev.map((item, index) =>
+        index === i ? { ...item, dropdown: !item.dropdown } : item
+      )
+    );
   };
 
   const handleSelect = (link, i, value) => {
@@ -237,271 +260,357 @@ const Organization = () => {
   };
 
   return (
-    <div>
+    <div className="h-full min-h-[calc(100vh-227px)]">
       {loading2 ? (
         <div className="flex items-center justify-center w-full h-full min-h-[calc(100vh-227px)]">
           <LoaderIcon className="!w-12 !h-12 !border-r-[#106FEC]" />
         </div>
       ) : (
-        <>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Organisation: Facility and Site Information
-          </h2>
-          <div className="grid grid-cols-2 gap-4 px-3">
-            <div className="relative mb-5">
-              <h4 className="mb-2">Facility Name</h4>
-              <p className="text-[14px] font-400 leading-4">ABC Pvt. Ltd.</p>
-            </div>
-
-            <div className="relative mb-5">
-              <h4 className="mb-2">Facility Address</h4>
-              <p className="text-[14px] font-400 leading-4">
-                401/B, New abc building, Khothari nagar, NR. R mall, Andheri -
-                Mumbai
-              </p>
-            </div>
-          </div>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery(
-                    "Organisation: Facility and Site Information"
-                  )
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+        <div className="flex justify-between flex-col gap-5 h-full">
+          <div>
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Organisation: Facility and Site Information
+              </h2>
+              <button onClick={() => handleDropDown(0)} type="button">
+                {!dropdown[0]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs1.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <p>{item.document_name}</p>
-                  {doc[0].documents[i]?.document ? (
-                    <Link
-                      to={doc[0].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[0].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect("Facility and Site Information", i, value)
-                    }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[0].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(e, "Facility and Site Information", i)
-                    }
-                  />
+            {!dropdown[0]?.dropdown && (
+              <>
+                <div className="grid grid-cols-2 gap-4 px-3">
+                  <div className="relative mb-5">
+                    <h4 className="mb-2">Facility Name</h4>
+                    <p className="text-[14px] font-400 leading-4">
+                      ABC Pvt. Ltd.
+                    </p>
+                  </div>
+                  <div className="relative mb-5">
+                    <h4 className="mb-2">Facility Address</h4>
+                    <p className="text-[14px] font-400 leading-4">
+                      401/B, New abc building, Khothari nagar, NR. R mall,
+                      Andheri - Mumbai
+                    </p>
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Organisation: Organizational Structure and Management
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery(
-                    "Organisation: Organizational Structure and Management"
-                  )
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+                <div className="px-3 mb-10">
+                  <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                    <h5 className="text-[14px] font-[500] leading-4">
+                      Documents
+                    </h5>
+                    <button
+                      onClick={() =>
+                        handleRaiseQuery(
+                          "Organisation: Facility and Site Information"
+                        )
+                      }
+                      className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                    >
+                      Raise Query
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3">
+                    {docs1.map((item, i) => (
+                      <div
+                        className="grid grid-cols-4 gap-10 items-center"
+                        key={i}
+                      >
+                        <p>{item.document_name}</p>
+                        {doc[0].documents[i]?.document ? (
+                          <Link
+                            to={doc[0].documents[i]?.document}
+                            target="_blank"
+                            className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                          >
+                            Factory License
+                          </Link>
+                        ) : (
+                          <span className="text-[14px] font-[400] leading-4">
+                            Factory License
+                          </span>
+                        )}
+                        <SelectList
+                          value={doc[0].documents[i].select || "Select"}
+                          option={[
+                            { name: "Yes" },
+                            { name: "No" },
+                            { name: "N/A" },
+                          ]}
+                          field="name"
+                          name="select"
+                          onchange={(value) =>
+                            handleSelect(
+                              "Facility and Site Information",
+                              i,
+                              value
+                            )
+                          }
+                        />
+                        <input
+                          type="text"
+                          name="comment"
+                          value={doc[0].documents[i].comment || ""}
+                          className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                          placeholder="Enter comments"
+                          onChange={(e) =>
+                            handleChange(e, "Facility and Site Information", i)
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+            <div className="flex items-center justify-between">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Organisation: Organizational Structure and Management
+              </h2>
+              <button onClick={() => handleDropDown(1)} type="button">
+                {!dropdown[1]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs2.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <p>{item.document_name}</p>
-                  {doc[1].documents[i]?.document ? (
-                    <Link
-                      to={doc[1].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[1].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Organizational Structure and Management",
-                        i,
-                        value
+            {!dropdown[1].dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery(
+                        "Organisation: Organizational Structure and Management"
                       )
                     }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[1].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(
-                        e,
-                        "Organizational Structure and Management",
-                        i
-                      )
-                    }
-                  />
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Organisation: Policies and Procedures
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery("Organisation: Policies and Procedures")
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+                <div className="grid grid-cols-1 gap-3">
+                  {docs2.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
+                    >
+                      <p>{item.document_name}</p>
+                      {doc[1].documents[i]?.document ? (
+                        <Link
+                          to={doc[1].documents[i]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[1].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Organizational Structure and Management",
+                            i,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[1].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(
+                            e,
+                            "Organizational Structure and Management",
+                            i
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex items-center justify-between">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Organisation: Policies and Procedures
+              </h2>
+              <button onClick={() => handleDropDown(2)} type="button">
+                {!dropdown[2]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs3.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <p>{item.document_name}</p>
-                  {doc[2].documents[i]?.document ? (
-                    <Link
-                      to={doc[2].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[2].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect("Policies and Procedures", i, value)
+            {!dropdown[2].dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery("Organisation: Policies and Procedures")
                     }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[2].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(e, "Policies and Procedures", i)
-                    }
-                  />
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Organisation: Existing Accreditations and Certifications
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery(
-                    "Organisation: Existing Accreditations and Certifications"
-                  )
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+                <div className="grid grid-cols-1 gap-3">
+                  {docs3.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
+                    >
+                      <p>{item.document_name}</p>
+                      {doc[2].documents[i]?.document ? (
+                        <Link
+                          to={doc[2].documents[i]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[2].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect("Policies and Procedures", i, value)
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[2].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(e, "Policies and Procedures", i)
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex items-center justify-between">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Organisation: Existing Accreditations and Certifications
+              </h2>
+              <button onClick={() => handleDropDown(3)} type="button">
+                {!dropdown[3]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs4.map((item, index) => (
-                <div
-                  className="grid grid-cols-4 gap-10 items-center"
-                  key={index}
-                >
-                  <p>{item.document_name}</p>
-                  {doc[3].documents[index]?.document ? (
-                    <Link
-                      to={doc[3].documents[index]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[3].documents[index].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Existing Accreditations and Certifications",
-                        index,
-                        value
+            {!dropdown[3].dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery(
+                        "Organisation: Existing Accreditations and Certifications"
                       )
                     }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[3].documents[index].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(
-                        e,
-                        "Existing Accreditations and Certifications",
-                        index
-                      )
-                    }
-                  />
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
                 </div>
-              ))}
-            </div>
+                <div className="grid grid-cols-1 gap-3">
+                  {docs4.map((item, index) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={index}
+                    >
+                      <p>{item.document_name}</p>
+                      {doc[3].documents[index]?.document ? (
+                        <Link
+                          to={doc[3].documents[index]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[3].documents[index].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Existing Accreditations and Certifications",
+                            index,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[3].documents[index].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(
+                            e,
+                            "Existing Accreditations and Certifications",
+                            index
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex justify-end">
             <button
@@ -519,7 +628,7 @@ const Organization = () => {
               )}
             </button>
           </div>
-        </>
+        </div>
       )}
       <QuertRaise
         isSubmit={isSubmit}

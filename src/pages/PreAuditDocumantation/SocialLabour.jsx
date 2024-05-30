@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { addDocData, getOneAudit } from "../../store/action/preAuditAction";
 import { LoaderIcon } from "react-hot-toast";
 import QuertRaise from "../../components/common/QuertRaise";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 
 const docs1 = [
   {
@@ -466,7 +467,6 @@ const SocialLabour = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const admin = JSON.parse(localStorage.getItem("admin"));
   const { preaudit } = useSelector((state) => state.preAuditReducer);
-
   const [doc, setDoc] = useState([
     {
       name: "Organisation: Facility and Site Information",
@@ -501,6 +501,32 @@ const SocialLabour = () => {
       documents: docs8,
     },
   ]);
+  const [dropdown, setDropdown] = useState([
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+  ]);
 
   const handleChange = (e, link, i) => {
     const { name, value } = e.target;
@@ -521,6 +547,14 @@ const SocialLabour = () => {
         return item;
       });
     });
+  };
+
+  const handleDropDown = (i) => {
+    setDropdown((prev) =>
+      prev.map((item, index) =>
+        index === i ? { ...item, dropdown: !item.dropdown } : item
+      )
+    );
   };
 
   const handleSelect = (link, i, value) => {
@@ -569,567 +603,749 @@ const SocialLabour = () => {
   };
 
   return (
-    <div>
+    <div className="h-full min-h-[calc(100vh-227px)]">
       {loading2 ? (
         <div className="flex items-center justify-center w-full h-full min-h-[calc(100vh-227px)]">
           <LoaderIcon className="!w-12 !h-12 !border-r-[#106FEC]" />
         </div>
       ) : (
-        <>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Organisation: Facility and Site Information
-          </h2>
-          <div className="grid grid-cols-2 gap-4 px-3">
-            <div className="relative mb-5">
-              <h4 className="mb-2">Facility Name</h4>
-              <p className="text-[14px] font-400 leading-4">ABC Pvt. Ltd.</p>
+        <div className="flex justify-between flex-col gap-5 h-full">
+          <div>
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Organisation: Facility and Site Information
+              </h2>
+              <button onClick={() => handleDropDown(0)} type="button">
+                {!dropdown[0]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
+              </button>
             </div>
+            {!dropdown[0]?.dropdown && (
+              <>
+                <div className="grid grid-cols-2 gap-4 px-3">
+                  <div className="relative mb-5">
+                    <h4 className="mb-2">Facility Name</h4>
+                    <p className="text-[14px] font-400 leading-4">
+                      ABC Pvt. Ltd.
+                    </p>
+                  </div>
 
-            <div className="relative mb-5">
-              <h4 className="mb-2">Facility Address</h4>
-              <p className="text-[14px] font-400 leading-4">
-                401/B, New abc building, Khothari nagar, NR. R mall, Andheri -
-                Mumbai
-              </p>
-            </div>
-          </div>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery(
-                    "Organisation: Facility and Site Information"
-                  )
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
-              </button>
-            </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs1.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <div>
-                    <h5 className="text-[14px] font-[300]">
-                      {item.document_name}
-                    </h5>
-                    <p className="text-[10px] font-[300] leading-3">
-                      {item?.desc}
+                  <div className="relative mb-5">
+                    <h4 className="mb-2">Facility Address</h4>
+                    <p className="text-[14px] font-400 leading-4">
+                      401/B, New abc building, Khothari nagar, NR. R mall,
+                      Andheri - Mumbai
                     </p>
                   </div>
-                  {doc[0].documents[i]?.document ? (
-                    <Link
-                      to={doc[0].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[0]?.documents[i]?.select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Organisation: Facility and Site Information",
-                        i,
-                        value
-                      )
-                    }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[0]?.documents[i]?.comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(
-                        e,
-                        "Organisation: Facility and Site Information",
-                        i
-                      )
-                    }
-                  />
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Social and Labour: Forced Labor
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery("Social and Labour: Forced Labor")
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
-              </button>
-            </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs2.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <div>
-                    <h5 className="text-[14px] font-[300]">
-                      {item.document_name}
+                <div className="px-3 mb-10">
+                  <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                    <h5 className="text-[14px] font-[500] leading-4">
+                      Documents
                     </h5>
-                    <p className="text-[10px] font-[300] leading-3">
-                      {item?.desc}
-                    </p>
-                  </div>
-                  {doc[1].documents[i]?.document ? (
-                    <Link
-                      to={doc[1].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                    <button
+                      onClick={() =>
+                        handleRaiseQuery(
+                          "Organisation: Facility and Site Information"
+                        )
+                      }
+                      className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
                     >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[1].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect("Social and Labour: Forced Labor", i, value)
-                    }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[1].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(e, "Social and Labour: Forced Labor", i)
-                    }
-                  />
+                      Raise Query
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3">
+                    {docs1.map((item, i) => (
+                      <div
+                        className="grid grid-cols-4 gap-10 items-center"
+                        key={i}
+                      >
+                        <div>
+                          <h5 className="text-[14px] font-[300]">
+                            {item.document_name}
+                          </h5>
+                          <p className="text-[10px] font-[300] leading-3">
+                            {item?.desc}
+                          </p>
+                        </div>
+                        {doc[0].documents[i]?.document ? (
+                          <Link
+                            to={doc[0].documents[i]?.document}
+                            target="_blank"
+                            className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                          >
+                            Factory License
+                          </Link>
+                        ) : (
+                          <span className="text-[14px] font-[400] leading-4">
+                            Factory License
+                          </span>
+                        )}
+                        <SelectList
+                          value={doc[0]?.documents[i]?.select || "Select"}
+                          option={[
+                            { name: "Yes" },
+                            { name: "No" },
+                            { name: "N/A" },
+                          ]}
+                          field="name"
+                          name="select"
+                          onchange={(value) =>
+                            handleSelect(
+                              "Organisation: Facility and Site Information",
+                              i,
+                              value
+                            )
+                          }
+                        />
+                        <input
+                          type="text"
+                          name="comment"
+                          value={doc[0]?.documents[i]?.comment || ""}
+                          className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                          placeholder="Enter comments"
+                          onChange={(e) =>
+                            handleChange(
+                              e,
+                              "Organisation: Facility and Site Information",
+                              i
+                            )
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Social and Labour: Harassment / Abuse
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery("Social and Labour: Harassment / Abuse")
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+              </>
+            )}
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Social and Labour: Forced Labor
+              </h2>
+              <button onClick={() => handleDropDown(1)} type="button">
+                {!dropdown[1]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs3.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <div>
-                    <h5 className="text-[14px] font-[300]">
-                      {item.document_name}
-                    </h5>
-                    <p className="text-[10px] font-[300] leading-3">
-                      {item?.desc}
-                    </p>
-                  </div>
-                  {doc[2].documents[i]?.document ? (
-                    <Link
-                      to={doc[2].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[2].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Social and Labour: Harassment / Abuse",
-                        i,
-                        value
-                      )
+            {!dropdown[1]?.dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery("Social and Labour: Forced Labor")
                     }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[2].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(
-                        e,
-                        "Social and Labour: Harassment / Abuse",
-                        i
-                      )
-                    }
-                  />
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Social and Labour: Discrimination
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery("Social and Labour: Discrimination")
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+                <div className="grid grid-cols-1 gap-3">
+                  {docs2.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
+                    >
+                      <div>
+                        <h5 className="text-[14px] font-[300]">
+                          {item.document_name}
+                        </h5>
+                        <p className="text-[10px] font-[300] leading-3">
+                          {item?.desc}
+                        </p>
+                      </div>
+                      {doc[1].documents[i]?.document ? (
+                        <Link
+                          to={doc[1].documents[i]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[1].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Social and Labour: Forced Labor",
+                            i,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[1].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(e, "Social and Labour: Forced Labor", i)
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Social and Labour: Harassment / Abuse
+              </h2>
+              <button onClick={() => handleDropDown(2)} type="button">
+                {!dropdown[2]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs4.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <div>
-                    <h5 className="text-[14px] font-[300]">
-                      {item.document_name}
-                    </h5>
-                    <p className="text-[10px] font-[300] leading-3">
-                      {item?.desc}
-                    </p>
-                  </div>
-                  {doc[1].documents[i]?.document ? (
-                    <Link
-                      to={doc[1].documents[i]?.document}
-                      target=" blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+            {!dropdown[2]?.dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery("Social and Labour: Harassment / Abuse")
+                    }
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 gap-3">
+                  {docs3.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
                     >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
+                      <div>
+                        <h5 className="text-[14px] font-[300]">
+                          {item.document_name}
+                        </h5>
+                        <p className="text-[10px] font-[300] leading-3">
+                          {item?.desc}
+                        </p>
+                      </div>
+                      {doc[2].documents[i]?.document ? (
+                        <Link
+                          to={doc[2].documents[i]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[2].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Social and Labour: Harassment / Abuse",
+                            i,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[2].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(
+                            e,
+                            "Social and Labour: Harassment / Abuse",
+                            i
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Social and Labour: Discrimination
+              </h2>
+              <button onClick={() => handleDropDown(3)} type="button">
+                {!dropdown[3]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
+              </button>
+            </div>
+            {!dropdown[3]?.dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery("Social and Labour: Discrimination")
+                    }
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 gap-3">
+                  {docs4.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
+                    >
+                      <div>
+                        <h5 className="text-[14px] font-[300]">
+                          {item.document_name}
+                        </h5>
+                        <p className="text-[10px] font-[300] leading-3">
+                          {item?.desc}
+                        </p>
+                      </div>
+                      {doc[1].documents[i]?.document ? (
+                        <Link
+                          to={doc[1].documents[i]?.document}
+                          target=" blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
 
-                  <SelectList
-                    value={doc[3].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Social and Labour: Discrimination",
-                        i,
-                        value
-                      )
-                    }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[3].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(e, "Social and Labour: Discrimination", i)
-                    }
-                  />
+                      <SelectList
+                        value={doc[3].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Social and Labour: Discrimination",
+                            i,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[3].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(
+                            e,
+                            "Social and Labour: Discrimination",
+                            i
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Social and Labour: Health and safety
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery("Social and Labour: Health and safety")
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+              </div>
+            )}
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Social and Labour: Health and safety
+              </h2>
+              <button onClick={() => handleDropDown(4)} type="button">
+                {!dropdown[4]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs5.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <div>
-                    <h5 className="text-[14px] font-[300]">
-                      {item.document_name}
-                    </h5>
-                    <p className="text-[10px] font-[300] leading-3">
-                      {item?.desc}
-                    </p>
-                  </div>
-                  {doc[4].documents[i]?.document ? (
-                    <Link
-                      to={doc[4].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[4].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Social and Labour: Health and safety",
-                        i,
-                        value
-                      )
+            {!dropdown[4]?.dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery("Social and Labour: Health and safety")
                     }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[4].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(e, "Social and Labour: Health and safety", i)
-                    }
-                  />
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Social and Labour: Wages and benefits
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery("Social and Labour: Wages and benefits")
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+                <div className="grid grid-cols-1 gap-3">
+                  {docs5.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
+                    >
+                      <div>
+                        <h5 className="text-[14px] font-[300]">
+                          {item.document_name}
+                        </h5>
+                        <p className="text-[10px] font-[300] leading-3">
+                          {item?.desc}
+                        </p>
+                      </div>
+                      {doc[4].documents[i]?.document ? (
+                        <Link
+                          to={doc[4].documents[i]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[4].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Social and Labour: Health and safety",
+                            i,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[4].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(
+                            e,
+                            "Social and Labour: Health and safety",
+                            i
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Social and Labour: Wages and benefits
+              </h2>
+              <button onClick={() => handleDropDown(5)} type="button">
+                {!dropdown[5]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs6.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <div>
-                    <h5 className="text-[14px] font-[300]">
-                      {item.document_name}
-                    </h5>
-                    <p className="text-[10px] font-[300] leading-3">
-                      {item?.desc}
-                    </p>
-                  </div>
-                  {doc[5].documents[i]?.document ? (
-                    <Link
-                      to={doc[5].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[5].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Social and Labour: Wages and benefits",
-                        i,
-                        value
-                      )
+            {!dropdown[5]?.dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery("Social and Labour: Wages and benefits")
                     }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[5].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(
-                        e,
-                        "Social and Labour: Wages and benefits",
-                        i
-                      )
-                    }
-                  />
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Social and Labour: Working hours
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery("Social and Labour: Working hours")
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+                <div className="grid grid-cols-1 gap-3">
+                  {docs6.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
+                    >
+                      <div>
+                        <h5 className="text-[14px] font-[300]">
+                          {item.document_name}
+                        </h5>
+                        <p className="text-[10px] font-[300] leading-3">
+                          {item?.desc}
+                        </p>
+                      </div>
+                      {doc[5].documents[i]?.document ? (
+                        <Link
+                          to={doc[5].documents[i]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[5].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Social and Labour: Wages and benefits",
+                            i,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[5].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(
+                            e,
+                            "Social and Labour: Wages and benefits",
+                            i
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Social and Labour: Working hours
+              </h2>
+              <button onClick={() => handleDropDown(6)} type="button">
+                {!dropdown[6]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs7.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <div>
-                    <h5 className="text-[14px] font-[300]">
-                      {item.document_name}
-                    </h5>
-                    <p className="text-[10px] font-[300] leading-3">
-                      {item?.desc}
-                    </p>
-                  </div>
-                  {doc[6].documents[i]?.document ? (
-                    <Link
-                      to={doc[6].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[6].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect("Social and Labour: Working hours", i, value)
+            {!dropdown[6]?.dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery("Social and Labour: Working hours")
                     }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[6].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(e, "Social and Labour: Working hours", i)
-                    }
-                  />
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Social and Labour: Employee/Contractor Living Wage
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery(
-                    "Social and Labour: Employee/Contractor Living Wage"
-                  )
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+                <div className="grid grid-cols-1 gap-3">
+                  {docs7.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
+                    >
+                      <div>
+                        <h5 className="text-[14px] font-[300]">
+                          {item.document_name}
+                        </h5>
+                        <p className="text-[10px] font-[300] leading-3">
+                          {item?.desc}
+                        </p>
+                      </div>
+                      {doc[6].documents[i]?.document ? (
+                        <Link
+                          to={doc[6].documents[i]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[6].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Social and Labour: Working hours",
+                            i,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[6].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(e, "Social and Labour: Working hours", i)
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Social and Labour: Employee/Contractor Living Wage
+              </h2>
+              <button onClick={() => handleDropDown(7)} type="button">
+                {!dropdown[7]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs8.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <div>
-                    <h5 className="text-[14px] font-[300]">
-                      {item.document_name}
-                    </h5>
-                    <p className="text-[10px] font-[300] leading-3">
-                      {item?.desc}
-                    </p>
-                  </div>
-                  {doc[7].documents[i]?.document ? (
-                    <Link
-                      to={doc[7].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[7].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Social and Labour: Employee/Contractor Living Wage",
-                        i,
-                        value
+            {!dropdown[7]?.dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery(
+                        "Social and Labour: Employee/Contractor Living Wage"
                       )
                     }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[7].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(
-                        e,
-                        "Social and Labour: Employee/Contractor Living Wage",
-                        i
-                      )
-                    }
-                  />
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
                 </div>
-              ))}
-            </div>
+                <div className="grid grid-cols-1 gap-3">
+                  {docs8.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
+                    >
+                      <div>
+                        <h5 className="text-[14px] font-[300]">
+                          {item.document_name}
+                        </h5>
+                        <p className="text-[10px] font-[300] leading-3">
+                          {item?.desc}
+                        </p>
+                      </div>
+                      {doc[7].documents[i]?.document ? (
+                        <Link
+                          to={doc[7].documents[i]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[7].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Social and Labour: Employee/Contractor Living Wage",
+                            i,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[7].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(
+                            e,
+                            "Social and Labour: Employee/Contractor Living Wage",
+                            i
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex justify-end">
             <button
@@ -1147,7 +1363,7 @@ const SocialLabour = () => {
               )}
             </button>
           </div>
-        </>
+        </div>
       )}
       <QuertRaise
         isSubmit={isSubmit}

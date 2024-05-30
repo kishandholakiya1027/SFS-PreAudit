@@ -37,7 +37,6 @@ export const adminLogin = (user, navigate, setLoading) => {
   return async (dispatch) => {
     try {
       const MemberData = await api(`/admin/pre_auditor/login`, "post", user);
-      console.log(MemberData.status === 200, MemberData);
       if (MemberData.status === 200) {
         if (MemberData.data.data.role === "Pre Audit Review") {
           localStorage.setItem(

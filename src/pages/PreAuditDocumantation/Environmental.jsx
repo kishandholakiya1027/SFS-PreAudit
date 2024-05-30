@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { addDocData, getOneAudit } from "../../store/action/preAuditAction";
 import { LoaderIcon } from "react-hot-toast";
 import QuertRaise from "../../components/common/QuertRaise";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 
 const docs1 = [
   {
@@ -102,6 +103,7 @@ const docs3 = [
     comment: "",
   },
 ];
+
 const Environmental = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -126,6 +128,17 @@ const Environmental = () => {
       documents: docs3,
     },
   ]);
+  const [dropdown, setDropdown] = useState([
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+    {
+      dropdown: false,
+    },
+  ]);
 
   const handleChange = (e, link, i) => {
     const { name, value } = e.target;
@@ -146,6 +159,14 @@ const Environmental = () => {
         return item;
       });
     });
+  };
+
+  const handleDropDown = (i) => {
+    setDropdown((prev) =>
+      prev.map((item, index) =>
+        index === i ? { ...item, dropdown: !item.dropdown } : item
+      )
+    );
   };
 
   const handleSelect = (link, i, value) => {
@@ -194,222 +215,288 @@ const Environmental = () => {
   };
 
   return (
-    <div>
+    <div className="h-full min-h-[calc(100vh-227px)]">
       {loading2 ? (
         <div className="flex items-center justify-center w-full h-full min-h-[calc(100vh-227px)]">
           <LoaderIcon className="!w-12 !h-12 !border-r-[#106FEC]" />
         </div>
       ) : (
-        <>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Environmental: Processor Site/Facility Energy and Emissions
-          </h2>
-          <div className="grid grid-cols-2 gap-4 px-3">
-            <div className="relative mb-5">
-              <h4 className="mb-2">Facility Name</h4>
-              <p className="text-[14px] font-400 leading-4">ABC Pvt. Ltd.</p>
+        <div className="flex justify-between flex-col gap-5 h-full">
+          <div>
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Environmental: Processor Site/Facility Energy and Emissions
+              </h2>
+              <button onClick={() => handleDropDown(0)} type="button">
+                {!dropdown[0]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
+              </button>
             </div>
+            {!dropdown[0]?.dropdown && (
+              <>
+                <div className="grid grid-cols-2 gap-4 px-3">
+                  <div className="relative mb-5">
+                    <h4 className="mb-2">Facility Name</h4>
+                    <p className="text-[14px] font-400 leading-4">
+                      ABC Pvt. Ltd.
+                    </p>
+                  </div>
 
-            <div className="relative mb-5">
-              <h4 className="mb-2">Facility Address</h4>
-              <p className="text-[14px] font-400 leading-4">
-                401/B, New abc building, Khothari nagar, NR. R mall, Andheri -
-                Mumbai
-              </p>
-            </div>
-          </div>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery(
-                    "Environmental: Processor Site/Facility Energy and Emissions"
-                  )
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+                  <div className="relative mb-5">
+                    <h4 className="mb-2">Facility Address</h4>
+                    <p className="text-[14px] font-400 leading-4">
+                      401/B, New abc building, Khothari nagar, NR. R mall,
+                      Andheri - Mumbai
+                    </p>
+                  </div>
+                </div>
+                <div className="px-3 mb-10">
+                  <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                    <h5 className="text-[14px] font-[500] leading-4">
+                      Documents
+                    </h5>
+                    <button
+                      onClick={() =>
+                        handleRaiseQuery(
+                          "Environmental: Processor Site/Facility Energy and Emissions"
+                        )
+                      }
+                      className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                    >
+                      Raise Query
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3">
+                    {docs1.map((item, i) => (
+                      <div
+                        className="grid grid-cols-4 gap-10 items-center"
+                        key={i}
+                      >
+                        <p>{item.document_name}</p>
+                        {doc[0].documents[i]?.document ? (
+                          <Link
+                            to={doc[0].documents[i]?.document}
+                            target="_blank"
+                            className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                          >
+                            Factory License
+                          </Link>
+                        ) : (
+                          <span className="text-[14px] font-[400] leading-4">
+                            Factory License
+                          </span>
+                        )}
+                        <SelectList
+                          value={doc[0].documents[i].select || "Select"}
+                          option={[
+                            { name: "Yes" },
+                            { name: "No" },
+                            { name: "N/A" },
+                          ]}
+                          field="name"
+                          name="select"
+                          onchange={(value) =>
+                            handleSelect(
+                              "Processor Site/Facility Energy and Emissions",
+                              i,
+                              value
+                            )
+                          }
+                        />
+                        <input
+                          type="text"
+                          name="comment"
+                          value={doc[0].documents[i].comment || ""}
+                          className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                          placeholder="Enter comments"
+                          onChange={(e) =>
+                            handleChange(
+                              e,
+                              "Processor Site/Facility Energy and Emissions",
+                              i
+                            )
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Environmental: Processor Site/Facility Chemical Management
+              </h2>
+              <button onClick={() => handleDropDown(1)} type="button">
+                {!dropdown[1]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs1.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <p>{item.document_name}</p>
-                  {doc[0].documents[i]?.document ? (
-                    <Link
-                      to={doc[0].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[0].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Processor Site/Facility Energy and Emissions",
-                        i,
-                        value
+            {!dropdown[1]?.dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery(
+                        "Environmental: Processor Site/Facility Chemical Management"
                       )
                     }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[0].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(
-                        e,
-                        "Processor Site/Facility Energy and Emissions",
-                        i
-                      )
-                    }
-                  />
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Environmental: Processor Site/Facility Chemical Management
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery(
-                    "Environmental: Processor Site/Facility Chemical Management"
-                  )
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
+                <div className="grid grid-cols-1 gap-3">
+                  {docs2.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
+                    >
+                      <p>{item.document_name}</p>
+                      {doc[1].documents[i]?.document ? (
+                        <Link
+                          to={doc[1].documents[i]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[1].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Processor Site/Facility Chemical Management",
+                            i,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[1].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(
+                            e,
+                            "Processor Site/Facility Chemical Management",
+                            i
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex justify-between items-center">
+              <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
+                Environmental: Processor Site/Facility Water and Effluent (if
+                Applicable)
+              </h2>
+              <button onClick={() => handleDropDown(2)} type="button">
+                {!dropdown[2]?.dropdown ? (
+                  <FaChevronUp size={16} />
+                ) : (
+                  <FaChevronDown size={16} />
+                )}
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs2.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <p>{item.document_name}</p>
-                  {doc[1].documents[i]?.document ? (
-                    <Link
-                      to={doc[1].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
-                    >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[1].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Processor Site/Facility Chemical Management",
-                        i,
-                        value
+            {!dropdown[2]?.dropdown && (
+              <div className="px-3 mb-10">
+                <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
+                  <h5 className="text-[14px] font-[500] leading-4">
+                    Documents
+                  </h5>
+                  <button
+                    onClick={() =>
+                      handleRaiseQuery(
+                        "Environmental: Processor Site/Facility Water and Effluent (if Applicable)"
                       )
                     }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[1].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(
-                        e,
-                        "Processor Site/Facility Chemical Management",
-                        i
-                      )
-                    }
-                  />
+                    className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
+                  >
+                    Raise Query
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-          <h2 className="px-3 text-[18px] font-[500] leading-5 mb-5">
-            Environmental: Processor Site/Facility Water and Effluent (if
-            Applicable)
-          </h2>
-          <div className="px-3 mb-10">
-            <div className="border-b-2 pb-4 mb-4 flex items-center justify-between">
-              <h5 className="text-[14px] font-[500] leading-4">Documents</h5>
-              <button
-                onClick={() =>
-                  handleRaiseQuery(
-                    "Environmental: Processor Site/Facility Water and Effluent (if Applicable)"
-                  )
-                }
-                className="text-[14px] font-[500] leading-4 underline text-[#106FEC]"
-              >
-                Raise Query
-              </button>
-            </div>
-            <div className="grid grid-cols-1 gap-3">
-              {docs3.map((item, i) => (
-                <div className="grid grid-cols-4 gap-10 items-center" key={i}>
-                  <p>{item.document_name}</p>
-                  {doc[2].documents[i]?.document ? (
-                    <Link
-                      to={doc[2].documents[i]?.document}
-                      target="_blank"
-                      className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                <div className="grid grid-cols-1 gap-3">
+                  {docs3.map((item, i) => (
+                    <div
+                      className="grid grid-cols-4 gap-10 items-center"
+                      key={i}
                     >
-                      Factory License
-                    </Link>
-                  ) : (
-                    <span className="text-[14px] font-[400] leading-4">
-                      Factory License
-                    </span>
-                  )}
-                  <SelectList
-                    value={doc[2].documents[i].select || "Select"}
-                    option={[{ name: "Yes" }, { name: "No" }, { name: "N/A" }]}
-                    field="name"
-                    name="select"
-                    onchange={(value) =>
-                      handleSelect(
-                        "Processor Site/Facility Water and Effluent (if Applicable)",
-                        i,
-                        value
-                      )
-                    }
-                  />
-                  <input
-                    type="text"
-                    name="comment"
-                    value={doc[2].documents[i].comment || ""}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter comments"
-                    onChange={(e) =>
-                      handleChange(
-                        e,
-                        "Processor Site/Facility Water and Effluent (if Applicable)",
-                        i
-                      )
-                    }
-                  />
+                      <p>{item.document_name}</p>
+                      {doc[2].documents[i]?.document ? (
+                        <Link
+                          to={doc[2].documents[i]?.document}
+                          target="_blank"
+                          className="underline text-[#106FEC] text-[14px] font-[400] leading-4"
+                        >
+                          Factory License
+                        </Link>
+                      ) : (
+                        <span className="text-[14px] font-[400] leading-4">
+                          Factory License
+                        </span>
+                      )}
+                      <SelectList
+                        value={doc[2].documents[i].select || "Select"}
+                        option={[
+                          { name: "Yes" },
+                          { name: "No" },
+                          { name: "N/A" },
+                        ]}
+                        field="name"
+                        name="select"
+                        onchange={(value) =>
+                          handleSelect(
+                            "Processor Site/Facility Water and Effluent (if Applicable)",
+                            i,
+                            value
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        name="comment"
+                        value={doc[2].documents[i].comment || ""}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        placeholder="Enter comments"
+                        onChange={(e) =>
+                          handleChange(
+                            e,
+                            "Processor Site/Facility Water and Effluent (if Applicable)",
+                            i
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
           </div>
           <div className="flex justify-end">
             <button
@@ -427,7 +514,7 @@ const Environmental = () => {
               )}
             </button>
           </div>
-        </>
+        </div>
       )}
       <QuertRaise
         isSubmit={isSubmit}
