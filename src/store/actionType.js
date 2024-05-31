@@ -90,3 +90,6 @@ export const AUDIT_FAIL = "AUDIT_FAIL";
 
 export const QUERY_SUCCESS = "QUERY_SUCCESS";
 export const QUERY_FAIL = "QUERY_FAIL";
+
+export const DASHBOARD_SUCCESS = "DASHBOARD_SUCCESS";
+export const DASHBOARD_FAIL = "DASHBOARD_FAIL";

@@ -17,6 +17,7 @@ import { AuditorSceduleReducer } from "./AdminReducer/AuditorSceduleReducer";
 import { countryReducer } from "./countryReducer";
 import { memberRoleReducer } from "./AdminReducer/memberRoleReducer";
 import { queryReducer } from "./queryReducer";
+import { dashboardReducer } from "./dashboardReducer";
 
 export const rootReducer = combineReducers({
   currentStepDataReducer,
@@ -24,6 +25,7 @@ export const rootReducer = combineReducers({
   memberRoleReducer,
   UserReducer,
   OneExpenceReducer,
+  dashboardReducer,
   queryReducer,
   ExpenceReducer,
   manageUserReducer,

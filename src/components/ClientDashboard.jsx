@@ -9,48 +9,41 @@ import Model from "./common/Model";
 import { GetUser } from "../store/action/registerAction";
 import { api } from "../axios/api";
 import { useLocation } from "react-router-dom";
+import { LoaderIcon } from "react-hot-toast";
+import { dashboardData } from "../store/action/dashboard";
+
+const cards = [
+  {
+    title: "Pending Invoices",
+    count: "0",
+  },
+  {
+    title: "Invoice send",
+    count: "0",
+  },
+  {
+    title: "Pending Payment",
+    count: "0",
+  },
+  {
+    title: "Cancel Invoice",
+    count: "0",
+  },
+  {
+    title: "Invoice Paid by Client",
+    count: "0",
+  },
+];
 
 const ClientDashboard = () => {
   const [isSubmit, setIsSubmit] = useState(false);
-  const [cardData, setCardData] = useState([]);
   const { user } = useSelector((state) => state.UserReducer);
   const token = localStorage.getItem("accessToken");
+  const [cardData, setCardData] = useState(cards);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname.includes("accounts")) {
-      const data = [
-        {
-          title: "Pending Invoices",
-          count: "800",
-          image: "",
-        },
-        {
-          title: "Invoice send",
-          count: "760",
-          image: "",
-        },
-        {
-          title: "Pending Payment",
-          count: "40",
-          image: "",
-        },
-        {
-          title: "Cancel Invoice",
-          count: "600",
-          image: "",
-        },
-        {
-          title: "Invoice Paid by Client",
-          count: "600",
-          image: "",
-        },
-      ];
-      setCardData(data);
-    }
-  }, [location]);
-
+  const { dashboard } = useSelector((state) => state.dashboardReducer);
   const [data, setData] = useState({
     password: "",
     c_password: "",
@@ -66,10 +59,6 @@ const ClientDashboard = () => {
     }
   }, [token, user]);
 
-  // useEffect(() => {
-  //   dispatch(GetUser());
-  // }, [dispatch]);
-
   useEffect(() => {
     if (currentData && currentData?.is_pass_approve === "0") {
       setIsSubmit(true);
@@ -77,6 +66,43 @@ const ClientDashboard = () => {
       setIsSubmit(false);
     }
   }, [currentData]);
+
+  useEffect(() => {
+    if (!dashboard) {
+      dispatch(dashboardData(setLoading));
+    } else {
+      setLoading(false);
+    }
+  }, [dashboard]);
+
+  useEffect(() => {
+    if (dashboard) {
+      setCardData(() => {
+        return [
+          {
+            title: "Pending Invoices",
+            count: dashboard?.pendingInvoice,
+          },
+          {
+            title: "Invoice send",
+            count: dashboard?.invoiceSend,
+          },
+          {
+            title: "Pending Payment",
+            count: dashboard?.pendingPayment,
+          },
+          {
+            title: "Cancel Invoice",
+            count: dashboard?.cancelInvoice,
+          },
+          {
+            title: "Invoice Paid by Client",
+            count: dashboard?.closeInvoice,
+          },
+        ];
+      });
+    }
+  }, [dashboard]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -160,7 +186,7 @@ const ClientDashboard = () => {
           />
         </div>
         {dataError.password && (
-          <p className="text-[#ff0000] text-[16px] pt-2 capitalize">
+          <p className="text-[#ff0000] text-[10px] pt-1 capitalize">
             {dataError.password}
           </p>
         )}
@@ -186,7 +212,7 @@ const ClientDashboard = () => {
           />
         </div>
         {dataError.c_password && (
-          <p className="text-[#ff0000] text-[16px] pt-2 capitalize">
+          <p className="text-[#ff0000] text-[10px] pt-1 capitalize">
             {dataError.c_password}
           </p>
         )}
@@ -204,21 +230,23 @@ const ClientDashboard = () => {
                 key={i}
                 className="min-w-[215px] w-full h-[130px] bg-white rounded-[10px] border-2 border-[#EFF6FE] col-span-1 hover:shadow-md hover:bg-slate-200 hover:border-slate-200"
               >
-                <div className="p-[12px] flex justify-end">
-                  <BsArrowRightShort className="w-[16px] h-[16px] text-[#116CE3]" />
-                </div>
-                <div className="flex items-end justify-between p-[20px] pt-[3px]">
-                  <div>
-                    <h3 className="text-[28px] font-[500]">{item.count}</h3>
-                    <p className="text-[14px] font-[300]">{item.title}</p>
+                {loading ? (
+                  <div className="flex items-center justify-center w-full h-full">
+                    <LoaderIcon className="!w-[18px] !h-[18px] !border-r-[#106FEC]" />
                   </div>
-                  {!location?.pathname?.includes("contracting") &&
-                    item.image !== "" && (
+                ) : (
+                  <>
+                    <div className="p-[12px] flex justify-end">
+                      <BsArrowRightShort className="w-[16px] h-[16px] text-[#116CE3]" />
+                    </div>
+                    <div className="flex items-end justify-between p-[20px] pt-[3px]">
                       <div>
-                        <img src={item.image} alt="DashboardUser" />
+                        <h3 className="text-[28px] font-[500]">{item.count}</h3>
+                        <p className="text-[14px] font-[300]">{item.title}</p>
                       </div>
-                    )}
-                </div>
+                    </div>
+                  </>
+                )}
               </div>
             );
           })}

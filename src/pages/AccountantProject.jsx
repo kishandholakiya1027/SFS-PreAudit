@@ -138,11 +138,6 @@ const AccountantProject = () => {
     setIsId("");
   };
 
-  const handleOpen = (id) => {
-    setIsSubmit(true);
-    setIsId(id);
-  };
-
   const handleClose = () => {
     setIsSubmit(false);
     setIsId("");
@@ -212,15 +207,6 @@ const AccountantProject = () => {
               );
             })}
         </ul>
-        {/* {loading ? (
-          <div className="flex items-center justify-center w-full h-full min-h-[calc(100vh-186px)]">
-            <LoaderIcon className="!w-12 !h-12 !border-r-[#106FEC]" />
-          </div>
-        ) : id ? (
-          <Outlet />
-        ) : (
-          TabsContent
-        )} */}
         {loading ? (
           <div className="flex items-center justify-center w-full h-full min-h-[calc(100vh-186px)]">
             <LoaderIcon className="!w-12 !h-12 !border-r-[#106FEC]" />
