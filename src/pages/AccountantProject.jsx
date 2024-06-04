@@ -36,11 +36,7 @@ const AccountantProject = () => {
   }, [dispatch]);
 
   const pendingData = useMemo(() => {
-    return reviewer?.filter((item) => item.status === "pending");
-  }, [reviewer]);
-
-  const otherData = useMemo(() => {
-    return reviewer?.filter((item) => item.status !== "pending");
+    return reviewer?.filter((item) => item.ncr_status === "approved");
   }, [reviewer]);
 
   const TableData = {
@@ -156,6 +152,7 @@ const AccountantProject = () => {
       </button>
     </div>
   );
+
   const TabsContent = useMemo(() => {
     switch (pathname) {
       case "/pre_audit/project":
@@ -172,7 +169,7 @@ const AccountantProject = () => {
       default:
         break;
     }
-  }, [activeTab, invoice, TableData, pendingData, otherData]);
+  }, [TableData, pathname]);
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
