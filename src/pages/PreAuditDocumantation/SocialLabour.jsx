@@ -528,27 +528,6 @@ const SocialLabour = () => {
     },
   ]);
 
-  const handleChange = (e, link, i) => {
-    const { name, value } = e.target;
-    setDoc((prev) => {
-      return prev.map((item) => {
-        if (item.name === link) {
-          return {
-            ...item,
-            documents: item.documents.map((doc) => {
-              if (doc.id === i + 1) {
-                return { ...doc, [name]: value };
-              } else {
-                return doc;
-              }
-            }),
-          };
-        }
-        return item;
-      });
-    });
-  };
-
   const handleDropDown = (i) => {
     setDropdown((prev) =>
       prev.map((item, index) =>
@@ -557,34 +536,8 @@ const SocialLabour = () => {
     );
   };
 
-  const handleSelect = (link, i, value) => {
-    setDoc((prev) => {
-      return prev.map((item) => {
-        if (item.name === link) {
-          return {
-            ...item,
-            documents: item.documents.map((doc) => {
-              if (doc.id === i + 1) {
-                return { ...doc, select: value };
-              } else {
-                return doc;
-              }
-            }),
-          };
-        }
-        return item;
-      });
-    });
-  };
-
   const handleSubmit = () => {
-    setLoading(true);
-    const payload = {
-      data: doc,
-      clientId: id,
-      name: "Social and Labour",
-    };
-    dispatch(addDocData(payload, setLoading, navigate, id));
+    navigate("/pre_audit/project/" + id + "/scheduling/company_details");
   };
 
   useEffect(() => {
@@ -684,36 +637,19 @@ const SocialLabour = () => {
                             Factory License
                           </span>
                         )}
-                        <SelectList
-                          value={doc[0]?.documents[i]?.select || "Select"}
-                          option={[
-                            { name: "Yes" },
-                            { name: "No" },
-                            { name: "N/A" },
-                          ]}
-                          field="name"
-                          name="select"
-                          onchange={(value) =>
-                            handleSelect(
-                              "Organisation: Facility and Site Information",
-                              i,
-                              value
-                            )
-                          }
+                        <input
+                          type="text"
+                          value={doc[0].documents[i].select.name || "Select"}
+                          className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                          disabled
                         />
                         <input
                           type="text"
                           name="comment"
                           value={doc[0]?.documents[i]?.comment || ""}
-                          className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                          className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                          disabled
                           placeholder="Enter comments"
-                          onChange={(e) =>
-                            handleChange(
-                              e,
-                              "Organisation: Facility and Site Information",
-                              i
-                            )
-                          }
                         />
                       </div>
                     ))}
@@ -775,32 +711,19 @@ const SocialLabour = () => {
                           Factory License
                         </span>
                       )}
-                      <SelectList
-                        value={doc[1].documents[i].select || "Select"}
-                        option={[
-                          { name: "Yes" },
-                          { name: "No" },
-                          { name: "N/A" },
-                        ]}
-                        field="name"
-                        name="select"
-                        onchange={(value) =>
-                          handleSelect(
-                            "Social and Labour: Forced Labor",
-                            i,
-                            value
-                          )
-                        }
+                      <input
+                        type="text"
+                        value={doc[1].documents[i].select.name || "Select"}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                       />
                       <input
                         type="text"
                         name="comment"
                         value={doc[1].documents[i].comment || ""}
-                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                         placeholder="Enter comments"
-                        onChange={(e) =>
-                          handleChange(e, "Social and Labour: Forced Labor", i)
-                        }
                       />
                     </div>
                   ))}
@@ -861,36 +784,19 @@ const SocialLabour = () => {
                           Factory License
                         </span>
                       )}
-                      <SelectList
-                        value={doc[2].documents[i].select || "Select"}
-                        option={[
-                          { name: "Yes" },
-                          { name: "No" },
-                          { name: "N/A" },
-                        ]}
-                        field="name"
-                        name="select"
-                        onchange={(value) =>
-                          handleSelect(
-                            "Social and Labour: Harassment / Abuse",
-                            i,
-                            value
-                          )
-                        }
+                      <input
+                        type="text"
+                        value={doc[2].documents[i].select.name || "Select"}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                       />
                       <input
                         type="text"
                         name="comment"
                         value={doc[2].documents[i].comment || ""}
-                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                         placeholder="Enter comments"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            "Social and Labour: Harassment / Abuse",
-                            i
-                          )
-                        }
                       />
                     </div>
                   ))}
@@ -952,36 +858,19 @@ const SocialLabour = () => {
                         </span>
                       )}
 
-                      <SelectList
-                        value={doc[3].documents[i].select || "Select"}
-                        option={[
-                          { name: "Yes" },
-                          { name: "No" },
-                          { name: "N/A" },
-                        ]}
-                        field="name"
-                        name="select"
-                        onchange={(value) =>
-                          handleSelect(
-                            "Social and Labour: Discrimination",
-                            i,
-                            value
-                          )
-                        }
+                      <input
+                        type="text"
+                        value={doc[3].documents[i].select.name || "Select"}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                       />
                       <input
                         type="text"
                         name="comment"
                         value={doc[3].documents[i].comment || ""}
-                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                         placeholder="Enter comments"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            "Social and Labour: Discrimination",
-                            i
-                          )
-                        }
                       />
                     </div>
                   ))}
@@ -1042,36 +931,19 @@ const SocialLabour = () => {
                           Factory License
                         </span>
                       )}
-                      <SelectList
-                        value={doc[4].documents[i].select || "Select"}
-                        option={[
-                          { name: "Yes" },
-                          { name: "No" },
-                          { name: "N/A" },
-                        ]}
-                        field="name"
-                        name="select"
-                        onchange={(value) =>
-                          handleSelect(
-                            "Social and Labour: Health and safety",
-                            i,
-                            value
-                          )
-                        }
+                      <input
+                        type="text"
+                        value={doc[4].documents[i].select.name || "Select"}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                       />
                       <input
                         type="text"
                         name="comment"
                         value={doc[4].documents[i].comment || ""}
-                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                         placeholder="Enter comments"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            "Social and Labour: Health and safety",
-                            i
-                          )
-                        }
                       />
                     </div>
                   ))}
@@ -1132,36 +1004,19 @@ const SocialLabour = () => {
                           Factory License
                         </span>
                       )}
-                      <SelectList
-                        value={doc[5].documents[i].select || "Select"}
-                        option={[
-                          { name: "Yes" },
-                          { name: "No" },
-                          { name: "N/A" },
-                        ]}
-                        field="name"
-                        name="select"
-                        onchange={(value) =>
-                          handleSelect(
-                            "Social and Labour: Wages and benefits",
-                            i,
-                            value
-                          )
-                        }
+                      <input
+                        type="text"
+                        value={doc[5].documents[i].select.name || "Select"}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                       />
                       <input
                         type="text"
                         name="comment"
                         value={doc[5].documents[i].comment || ""}
-                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                         placeholder="Enter comments"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            "Social and Labour: Wages and benefits",
-                            i
-                          )
-                        }
                       />
                     </div>
                   ))}
@@ -1222,32 +1077,19 @@ const SocialLabour = () => {
                           Factory License
                         </span>
                       )}
-                      <SelectList
-                        value={doc[6].documents[i].select || "Select"}
-                        option={[
-                          { name: "Yes" },
-                          { name: "No" },
-                          { name: "N/A" },
-                        ]}
-                        field="name"
-                        name="select"
-                        onchange={(value) =>
-                          handleSelect(
-                            "Social and Labour: Working hours",
-                            i,
-                            value
-                          )
-                        }
+                      <input
+                        type="text"
+                        value={doc[6].documents[i].select.name || "Select"}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                       />
                       <input
                         type="text"
                         name="comment"
                         value={doc[6].documents[i].comment || ""}
-                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                         placeholder="Enter comments"
-                        onChange={(e) =>
-                          handleChange(e, "Social and Labour: Working hours", i)
-                        }
                       />
                     </div>
                   ))}
@@ -1310,36 +1152,19 @@ const SocialLabour = () => {
                           Factory License
                         </span>
                       )}
-                      <SelectList
-                        value={doc[7].documents[i].select || "Select"}
-                        option={[
-                          { name: "Yes" },
-                          { name: "No" },
-                          { name: "N/A" },
-                        ]}
-                        field="name"
-                        name="select"
-                        onchange={(value) =>
-                          handleSelect(
-                            "Social and Labour: Employee/Contractor Living Wage",
-                            i,
-                            value
-                          )
-                        }
+                      <input
+                        type="text"
+                        value={doc[7].documents[i].select.name || "Select"}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                       />
                       <input
                         type="text"
                         name="comment"
                         value={doc[7].documents[i].comment || ""}
-                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                         placeholder="Enter comments"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            "Social and Labour: Employee/Contractor Living Wage",
-                            i
-                          )
-                        }
                       />
                     </div>
                   ))}
@@ -1350,17 +1175,10 @@ const SocialLabour = () => {
           <div className="flex justify-end">
             <button
               type="button"
-              disabled={loading}
               onClick={handleSubmit}
-              className={`text-[16px] font-Roboto font-[500] leading-[18px] text-[#fff] py-[8px] px-[40px] bg-[#106FEC] rounded-[2px] w-[116px] flex items-center justify-center ${
-                loading && "opacity-70"
-              }`}
+              className={`text-[16px] font-Roboto font-[500] leading-[18px] text-[#fff] py-[8px] px-[40px] bg-[#106FEC] rounded-[2px] w-[116px] flex items-center justify-center`}
             >
-              {loading ? (
-                <LoaderIcon className="!w-[18px] !h-[18px]" />
-              ) : (
-                "Save"
-              )}
+              Next
             </button>
           </div>
         </div>

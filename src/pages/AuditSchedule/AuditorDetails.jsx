@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { PostAuditorScedule } from "../../store/action/AdminActions/AuditorSceduleAction";
+import {
+  getAuditorScheduleByUserId,
+  PostAuditorScedule,
+} from "../../store/action/AdminActions/AuditorSceduleAction";
 import { GetMembersByRole } from "../../store/action/AdminActions/memberAction";
 import { useParams } from "react-router-dom";
 import ComboBox from "../../components/common/ComboBox";
@@ -13,8 +16,10 @@ const AuditorDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { member_role } = useSelector((state) => state.memberRoleReducer);
+  const { audit } = useSelector((state) => state.AuditorSceduleReducer);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(true);
   const [location, setLocation] = useState(null);
   const [isSubmit, setIsSubmit] = useState(false);
   const admin = JSON.parse(localStorage.getItem("admin"));
@@ -105,9 +110,7 @@ const AuditorDetails = () => {
         contactNo: data.contact,
         email: data.email,
       };
-      dispatch(
-        PostAuditorScedule(payload, setLoading, setData, setShow, setLocation)
-      );
+      dispatch(PostAuditorScedule(payload, setLoading));
     } else {
       !data?.from &&
         setError((prev) => ({ ...prev, from: "Please select date" }));
@@ -129,6 +132,10 @@ const AuditorDetails = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    dispatch(getAuditorScheduleByUserId(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
     if (location === null) {
       setError((prev) => ({ ...prev, auditor: "Please select auditor" }));
     } else {
@@ -137,139 +144,163 @@ const AuditorDetails = () => {
     setError((prev) => ({ ...prev, auditor: "" }));
   }, [location, t]);
 
+  useEffect(() => {
+    if (audit && memberList?.length) {
+      setShow(true);
+      setData((prev) => {
+        return {
+          ...prev,
+          from: audit?.dateFrom,
+          to: audit?.dateTo,
+          contact: audit?.contactNo,
+          email: audit?.email,
+        };
+      });
+      const auditor = memberList.find((item) => item.id === +audit?.auditor);
+      setLocation(auditor);
+      setLoading2(false);
+    }
+  }, [audit, memberList]);
+
   return (
     <div className="flex flex-col justify-between h-full gap-5">
-      <div>
-        <div className="flex flex-wrap">
-          <div className="w-1/3 mb-6 px-3 relative">
-            <div>
-              <label
-                htmlFor="from"
-                className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
-              >
-                Date From
-              </label>
-              <input
-                type="date"
-                name="from"
-                id="from"
-                onChange={handleChange}
-                value={data?.from}
-                className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                placeholder="Enter company name"
-              />
-            </div>
-            {error?.from && (
-              <p className="text-[10px] text-[#ff0000] pt-1 absolute top-full">
-                {error.from}
-              </p>
-            )}
-          </div>
-          <div className="w-1/3 mb-6 px-3 relative">
-            <div>
-              <label
-                htmlFor="to"
-                className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
-              >
-                Date To
-              </label>
-              <input
-                type="date"
-                name="to"
-                id="to"
-                onChange={handleChange}
-                value={data?.to}
-                className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                placeholder="Enter company name"
-              />
-            </div>
-            {error?.to && (
-              <p className="text-[10px] text-[#ff0000] pt-1 absolute top-full">
-                {error.to}
-              </p>
-            )}
-          </div>
+      {loading2 ? (
+        <div className="flex items-center justify-center w-full h-full min-h-[calc(100vh-281px)]">
+          <LoaderIcon className="!w-12 !h-12 !border-r-[#106FEC]" />
         </div>
-        {show && (
-          <>
-            <div className="flex flex-wrap">
-              <div className="w-1/3 mb-6 px-3 relative">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
-                  >
-                    Auditor Name
-                  </label>
-                  <ComboBox
-                    id="name"
-                    name="name"
-                    value={location?.name}
-                    location={location}
-                    option={memberList}
-                    setLocation={setLocation}
-                    onchange={(value) => setLocation(value)}
-                    color={true}
-                  />
-                </div>
-                {error?.auditor && (
-                  <p className="text-[10px] text-[#ff0000] pt-1 absolute top-full">
-                    {error.auditor}
-                  </p>
-                )}
+      ) : (
+        <div>
+          <div className="flex flex-wrap">
+            <div className="w-1/3 mb-6 px-3 relative">
+              <div>
+                <label
+                  htmlFor="from"
+                  className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                >
+                  Date From
+                </label>
+                <input
+                  type="date"
+                  name="from"
+                  id="from"
+                  onChange={handleChange}
+                  value={data?.from}
+                  className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                  placeholder="Enter company name"
+                />
               </div>
-              <div className="w-1/3 mb-6 px-3 relative">
-                <div>
-                  <label
-                    htmlFor="contact"
-                    className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
-                  >
-                    Contact No
-                  </label>
-                  <input
-                    type="text"
-                    name="contact"
-                    id="contact"
-                    onChange={handleChange}
-                    value={data?.contact}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter contact no"
-                  />
-                </div>
-                {error?.contact && (
-                  <p className="text-[10px] text-[#ff0000] pt-1 absolute top-full">
-                    {error.contact}
-                  </p>
-                )}
-              </div>
-              <div className="w-1/3 mb-6 px-3 relative">
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type="text"
-                    name="email"
-                    id="email"
-                    onChange={handleChange}
-                    value={data?.email}
-                    className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
-                    placeholder="Enter email address"
-                  />
-                </div>
-                {error?.email && (
-                  <p className="text-[10px] text-[#ff0000] pt-1 absolute top-full">
-                    {error.email}
-                  </p>
-                )}
-              </div>
+              {error?.from && (
+                <p className="text-[10px] text-[#ff0000] pt-1 absolute top-full">
+                  {error.from}
+                </p>
+              )}
             </div>
-          </>
-        )}
-      </div>
+            <div className="w-1/3 mb-6 px-3 relative">
+              <div>
+                <label
+                  htmlFor="to"
+                  className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                >
+                  Date To
+                </label>
+                <input
+                  type="date"
+                  name="to"
+                  id="to"
+                  onChange={handleChange}
+                  value={data?.to}
+                  className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                  placeholder="Enter company name"
+                />
+              </div>
+              {error?.to && (
+                <p className="text-[10px] text-[#ff0000] pt-1 absolute top-full">
+                  {error.to}
+                </p>
+              )}
+            </div>
+          </div>
+          {show && (
+            <>
+              <div className="flex flex-wrap">
+                <div className="w-1/3 mb-6 px-3 relative">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                    >
+                      Auditor Name
+                    </label>
+                    <ComboBox
+                      id="name"
+                      name="name"
+                      value={location?.name}
+                      location={location}
+                      option={memberList}
+                      setLocation={setLocation}
+                      onchange={(value) => setLocation(value)}
+                      color={true}
+                    />
+                  </div>
+                  {error?.auditor && (
+                    <p className="text-[10px] text-[#ff0000] pt-1 absolute top-full">
+                      {error.auditor}
+                    </p>
+                  )}
+                </div>
+                <div className="w-1/3 mb-6 px-3 relative">
+                  <div>
+                    <label
+                      htmlFor="contact"
+                      className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                    >
+                      Contact No
+                    </label>
+                    <input
+                      type="text"
+                      name="contact"
+                      id="contact"
+                      onChange={handleChange}
+                      value={data?.contact}
+                      className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                      placeholder="Enter contact no"
+                    />
+                  </div>
+                  {error?.contact && (
+                    <p className="text-[10px] text-[#ff0000] pt-1 absolute top-full">
+                      {error.contact}
+                    </p>
+                  )}
+                </div>
+                <div className="w-1/3 mb-6 px-3 relative">
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                    >
+                      Email Address
+                    </label>
+                    <input
+                      type="text"
+                      name="email"
+                      id="email"
+                      onChange={handleChange}
+                      value={data?.email}
+                      className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                      placeholder="Enter email address"
+                    />
+                  </div>
+                  {error?.email && (
+                    <p className="text-[10px] text-[#ff0000] pt-1 absolute top-full">
+                      {error.email}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      )}
       <div className="flex items-center justify-between">
         <button
           onClick={() => setIsSubmit(true)}

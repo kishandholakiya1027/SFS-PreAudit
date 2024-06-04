@@ -5,7 +5,7 @@ import QuertRaise from "../../components/common/QuertRaise";
 import SelectList from "../../components/common/SelectList";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { addDocData, getOneAudit } from "../../store/action/preAuditAction";
+import { getOneAudit } from "../../store/action/preAuditAction";
 
 const docs1 = [
   {
@@ -146,7 +146,6 @@ const Organization = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(true);
   const [title, setTitle] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
@@ -185,27 +184,6 @@ const Organization = () => {
     },
   ]);
 
-  const handleChange = (e, link, i) => {
-    const { name, value } = e.target;
-    setDoc((prev) => {
-      return prev.map((item) => {
-        if (item.name === link) {
-          return {
-            ...item,
-            documents: item.documents.map((doc) => {
-              if (doc.id === i + 1) {
-                return { ...doc, [name]: value };
-              } else {
-                return doc;
-              }
-            }),
-          };
-        }
-        return item;
-      });
-    });
-  };
-
   const handleDropDown = (i) => {
     setDropdown((prev) =>
       prev.map((item, index) =>
@@ -214,34 +192,8 @@ const Organization = () => {
     );
   };
 
-  const handleSelect = (link, i, value) => {
-    setDoc((prev) => {
-      return prev.map((item) => {
-        if (item.name === link) {
-          return {
-            ...item,
-            documents: item.documents.map((doc) => {
-              if (doc.id === i + 1) {
-                return { ...doc, select: value };
-              } else {
-                return doc;
-              }
-            }),
-          };
-        }
-        return item;
-      });
-    });
-  };
-
   const handleSubmit = () => {
-    setLoading(true);
-    const payload = {
-      data: doc,
-      clientId: id,
-      name: "Organization",
-    };
-    dispatch(addDocData(payload, setLoading, navigate, id));
+    navigate("/pre_audit/project/" + id + "/review/chain_of_custody");
   };
 
   useEffect(() => {
@@ -333,32 +285,18 @@ const Organization = () => {
                             Factory License
                           </span>
                         )}
-                        <SelectList
-                          value={doc[0].documents[i].select || "Select"}
-                          option={[
-                            { name: "Yes" },
-                            { name: "No" },
-                            { name: "N/A" },
-                          ]}
-                          field="name"
-                          name="select"
-                          onchange={(value) =>
-                            handleSelect(
-                              "Facility and Site Information",
-                              i,
-                              value
-                            )
-                          }
+                        <input
+                          type="text"
+                          value={doc[0].documents[i].select.name || "Select"}
+                          className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                          disabled
                         />
                         <input
                           type="text"
                           name="comment"
                           value={doc[0].documents[i].comment || ""}
-                          className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                          className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
                           placeholder="Enter comments"
-                          onChange={(e) =>
-                            handleChange(e, "Facility and Site Information", i)
-                          }
                         />
                       </div>
                     ))}
@@ -415,36 +353,18 @@ const Organization = () => {
                           Factory License
                         </span>
                       )}
-                      <SelectList
-                        value={doc[1].documents[i].select || "Select"}
-                        option={[
-                          { name: "Yes" },
-                          { name: "No" },
-                          { name: "N/A" },
-                        ]}
-                        field="name"
-                        name="select"
-                        onchange={(value) =>
-                          handleSelect(
-                            "Organizational Structure and Management",
-                            i,
-                            value
-                          )
-                        }
+                      <input
+                        type="text"
+                        value={doc[1].documents[i].select.name || "Select"}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                       />
                       <input
                         type="text"
                         name="comment"
                         value={doc[1].documents[i].comment || ""}
-                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
                         placeholder="Enter comments"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            "Organizational Structure and Management",
-                            i
-                          )
-                        }
                       />
                     </div>
                   ))}
@@ -498,28 +418,18 @@ const Organization = () => {
                           Factory License
                         </span>
                       )}
-                      <SelectList
-                        value={doc[2].documents[i].select || "Select"}
-                        option={[
-                          { name: "Yes" },
-                          { name: "No" },
-                          { name: "N/A" },
-                        ]}
-                        field="name"
-                        name="select"
-                        onchange={(value) =>
-                          handleSelect("Policies and Procedures", i, value)
-                        }
+                      <input
+                        type="text"
+                        value={doc[2].documents[i].select.name || "Select"}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                       />
                       <input
                         type="text"
                         name="comment"
                         value={doc[2].documents[i].comment || ""}
-                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
                         placeholder="Enter comments"
-                        onChange={(e) =>
-                          handleChange(e, "Policies and Procedures", i)
-                        }
                       />
                     </div>
                   ))}
@@ -575,36 +485,18 @@ const Organization = () => {
                           Factory License
                         </span>
                       )}
-                      <SelectList
-                        value={doc[3].documents[index].select || "Select"}
-                        option={[
-                          { name: "Yes" },
-                          { name: "No" },
-                          { name: "N/A" },
-                        ]}
-                        field="name"
-                        name="select"
-                        onchange={(value) =>
-                          handleSelect(
-                            "Existing Accreditations and Certifications",
-                            index,
-                            value
-                          )
-                        }
+                      <input
+                        type="text"
+                        value={doc[3].documents[index].select.name || "Select"}
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        disabled
                       />
                       <input
                         type="text"
                         name="comment"
                         value={doc[3].documents[index].comment || ""}
-                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                        className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
                         placeholder="Enter comments"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            "Existing Accreditations and Certifications",
-                            index
-                          )
-                        }
                       />
                     </div>
                   ))}
@@ -615,17 +507,10 @@ const Organization = () => {
           <div className="flex justify-end">
             <button
               type="button"
-              disabled={loading}
               onClick={handleSubmit}
-              className={`text-[16px] font-Roboto font-[500] leading-[18px] text-[#fff] py-[8px] px-[40px] bg-[#106FEC] rounded-[2px] w-[116px] flex items-center justify-center ${
-                loading && "opacity-70"
-              }`}
+              className={`text-[16px] font-Roboto font-[500] leading-[18px] text-[#fff] py-[8px] px-[40px] bg-[#106FEC] rounded-[2px] w-[116px] flex items-center justify-center`}
             >
-              {loading ? (
-                <LoaderIcon className="!w-[18px] !h-[18px]" />
-              ) : (
-                "Save"
-              )}
+              Next
             </button>
           </div>
         </div>

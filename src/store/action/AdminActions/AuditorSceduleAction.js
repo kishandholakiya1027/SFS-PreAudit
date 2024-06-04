@@ -18,26 +18,28 @@ export const GetAuditorScedule = () => {
   };
 };
 
-export const PostAuditorScedule = (
-  data,
-  setLoading,
-  setData,
-  setShow,
-  setLocation
-) => {
+export const getAuditorScheduleByUserId = (id) => {
+  return async (dispatch) => {
+    try {
+      const AuditorSceduleData = await api(`/audit_schedule/user/${id}`, "get");
+      if (AuditorSceduleData.status === 200) {
+        dispatch({
+          type: AUDIT_SUCCESS,
+          payload: AuditorSceduleData.data.data,
+        });
+      }
+    } catch (error) {
+      dispatch({ type: AUDIT_FAIL, payload: error?.message });
+    }
+  };
+};
+
+export const PostAuditorScedule = (data, setLoading) => {
   return async (dispatch) => {
     try {
       const AuditorSceduleData = await api(`/audit_schedule/add`, "post", data);
       if (AuditorSceduleData.status === 200) {
         setLoading(false);
-        setData({
-          from: "",
-          to: "",
-          email: "",
-          contact: "",
-        });
-        setLocation(null);
-        setShow(false);
         toast.success("Audit schedule successfully");
       }
     } catch (error) {
