@@ -85,7 +85,7 @@ const Model = ({
                           type="button"
                           className={`inline-flex justify-center ${
                             btnW2 ? btnW2 : "w-[120px]"
-                          } rounded-[2px] px-[11px] py-2 text-sm font-semibold shadow-sm mt-[26px] ${button2Bg}`}
+                          } text-[16px] font-Roboto font-[500] leading-[18px] rounded-[2px] px-[40px] py-2 shadow-sm mt-[26px] ${button2Bg}`}
                           onClick={onSubbmit2}
                         >
                           {buttonText2}

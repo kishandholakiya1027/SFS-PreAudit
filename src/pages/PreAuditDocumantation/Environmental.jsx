@@ -107,7 +107,6 @@ const Environmental = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [title, setTitle] = useState("");
   const [loading2, setLoading2] = useState(true);
   const [isSubmit, setIsSubmit] = useState(false);
   const admin = JSON.parse(localStorage.getItem("admin"));
@@ -161,7 +160,6 @@ const Environmental = () => {
   }, [preaudit]);
 
   const handleRaiseQuery = (title) => {
-    setTitle(title);
     setIsSubmit(true);
   };
 
@@ -244,6 +242,7 @@ const Environmental = () => {
                           type="text"
                           value={doc[0].documents[i].select.name || "Select"}
                           className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                          readOnly
                           disabled
                         />
                         <input
@@ -251,6 +250,7 @@ const Environmental = () => {
                           name="comment"
                           value={doc[0].documents[i].comment || ""}
                           className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                          readOnly
                           disabled
                           placeholder="Enter comments"
                         />
@@ -313,6 +313,7 @@ const Environmental = () => {
                         type="text"
                         value={doc[1].documents[i].select.name || "Select"}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                       />
                       <input
@@ -320,6 +321,7 @@ const Environmental = () => {
                         name="comment"
                         value={doc[1].documents[i].comment || ""}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                         placeholder="Enter comments"
                       />
@@ -382,6 +384,7 @@ const Environmental = () => {
                         type="text"
                         value={doc[2].documents[i].select.name || "Select"}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                       />
                       <input
@@ -389,6 +392,7 @@ const Environmental = () => {
                         name="comment"
                         value={doc[2].documents[i].comment || ""}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                         placeholder="Enter comments"
                       />
@@ -415,7 +419,6 @@ const Environmental = () => {
         handleClose={() => setIsSubmit(false)}
         memberid={admin?.id}
         userid={id}
-        title={title}
       />
     </div>
   );

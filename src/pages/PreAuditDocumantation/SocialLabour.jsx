@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import SelectList from "../../components/common/SelectList";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { addDocData, getOneAudit } from "../../store/action/preAuditAction";
+import { getOneAudit } from "../../store/action/preAuditAction";
 import { LoaderIcon } from "react-hot-toast";
 import QuertRaise from "../../components/common/QuertRaise";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
@@ -461,8 +460,6 @@ const SocialLabour = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [title, setTitle] = useState("");
-  const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(true);
   const [isSubmit, setIsSubmit] = useState(false);
   const admin = JSON.parse(localStorage.getItem("admin"));
@@ -551,7 +548,6 @@ const SocialLabour = () => {
   }, [preaudit]);
 
   const handleRaiseQuery = (title) => {
-    setTitle(title);
     setIsSubmit(true);
   };
 
@@ -641,6 +637,7 @@ const SocialLabour = () => {
                           type="text"
                           value={doc[0].documents[i].select.name || "Select"}
                           className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                          readOnly
                           disabled
                         />
                         <input
@@ -648,6 +645,7 @@ const SocialLabour = () => {
                           name="comment"
                           value={doc[0]?.documents[i]?.comment || ""}
                           className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                          readOnly
                           disabled
                           placeholder="Enter comments"
                         />
@@ -715,6 +713,7 @@ const SocialLabour = () => {
                         type="text"
                         value={doc[1].documents[i].select.name || "Select"}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                       />
                       <input
@@ -722,6 +721,7 @@ const SocialLabour = () => {
                         name="comment"
                         value={doc[1].documents[i].comment || ""}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                         placeholder="Enter comments"
                       />
@@ -788,6 +788,7 @@ const SocialLabour = () => {
                         type="text"
                         value={doc[2].documents[i].select.name || "Select"}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                       />
                       <input
@@ -795,6 +796,7 @@ const SocialLabour = () => {
                         name="comment"
                         value={doc[2].documents[i].comment || ""}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                         placeholder="Enter comments"
                       />
@@ -862,6 +864,7 @@ const SocialLabour = () => {
                         type="text"
                         value={doc[3].documents[i].select.name || "Select"}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                       />
                       <input
@@ -869,6 +872,7 @@ const SocialLabour = () => {
                         name="comment"
                         value={doc[3].documents[i].comment || ""}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                         placeholder="Enter comments"
                       />
@@ -935,6 +939,7 @@ const SocialLabour = () => {
                         type="text"
                         value={doc[4].documents[i].select.name || "Select"}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                       />
                       <input
@@ -942,6 +947,7 @@ const SocialLabour = () => {
                         name="comment"
                         value={doc[4].documents[i].comment || ""}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                         placeholder="Enter comments"
                       />
@@ -1008,6 +1014,7 @@ const SocialLabour = () => {
                         type="text"
                         value={doc[5].documents[i].select.name || "Select"}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                       />
                       <input
@@ -1015,6 +1022,7 @@ const SocialLabour = () => {
                         name="comment"
                         value={doc[5].documents[i].comment || ""}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                         placeholder="Enter comments"
                       />
@@ -1081,6 +1089,7 @@ const SocialLabour = () => {
                         type="text"
                         value={doc[6].documents[i].select.name || "Select"}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                       />
                       <input
@@ -1088,6 +1097,7 @@ const SocialLabour = () => {
                         name="comment"
                         value={doc[6].documents[i].comment || ""}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                         placeholder="Enter comments"
                       />
@@ -1156,6 +1166,7 @@ const SocialLabour = () => {
                         type="text"
                         value={doc[7].documents[i].select.name || "Select"}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                       />
                       <input
@@ -1163,6 +1174,7 @@ const SocialLabour = () => {
                         name="comment"
                         value={doc[7].documents[i].comment || ""}
                         className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm pointer-events-none"
+                        readOnly
                         disabled
                         placeholder="Enter comments"
                       />
@@ -1189,7 +1201,6 @@ const SocialLabour = () => {
         handleClose={() => setIsSubmit(false)}
         memberid={admin?.id}
         userid={id}
-        title={title}
       />
     </div>
   );

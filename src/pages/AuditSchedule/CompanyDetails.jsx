@@ -258,7 +258,6 @@ const CompanyDetails = () => {
         handleClose={() => setIsSubmit(false)}
         memberid={admin?.id}
         userid={id}
-        title={"Please check your company details for audit schedule."}
       />
     </div>
   );
