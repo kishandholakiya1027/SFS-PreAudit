@@ -9,6 +9,7 @@ import { TabContext } from "../contexts/ActiveTabContext";
 import { LuEye } from "react-icons/lu";
 import { LoaderIcon } from "react-hot-toast";
 import { GetReviewe } from "../store/action/SendRevieweAction";
+import moment from "moment";
 
 const tabs = [
   {
@@ -27,9 +28,8 @@ const AccountantProject = () => {
   const { id, type } = useParams();
   const [isId, setIsId] = useState("");
   const [loading, setLoading] = useState(true);
-  const { activeTab, setActiveTab } = useContext(TabContext);
+  const { setActiveTab } = useContext(TabContext);
   const { reviewer } = useSelector((state) => state.sendRevieweReducer);
-  const { invoice } = useSelector((state) => state.SendInvoiceReducer);
 
   useEffect(() => {
     dispatch(GetReviewe(setLoading));
@@ -153,6 +153,25 @@ const AccountantProject = () => {
     </div>
   );
 
+  const exportData = useMemo(() => {
+    return pendingData.length > 0
+      ? pendingData.map((item) => {
+          return {
+            "Application ID":
+              moment().year().toString().slice(2) + "-" + item?.id,
+            "Application Received Date": moment(item?.createdAt).format(
+              "DD-MM-YYYY"
+            ),
+            "Company Name": item?.alldata?.clientData?.company_name,
+            STD: item?.std,
+            Reviewer: item?.reviewer,
+            Status: item?.status,
+            Comments: item?.messages,
+          };
+        })
+      : [];
+  }, [pendingData]);
+
   const TabsContent = useMemo(() => {
     switch (pathname) {
       case "/pre_audit/project":
@@ -163,6 +182,9 @@ const AccountantProject = () => {
             renderRowActions={renderRowActions}
             option={"invoiceList"}
             filter={true}
+            exportData={exportData}
+            setLoading={setLoading}
+            fileName="ApplicationList.xlsx"
           />
         );
 

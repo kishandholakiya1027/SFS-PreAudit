@@ -56,7 +56,6 @@ export const api = (url, method, data = null, isFormData = null) => {
                 "deviceid",
                 JSON.stringify(response.data.data.deviceid)
               );
-
               config.headers.Authorization = `Bearer ${response.data.data.accessToken}`;
               requestQueue.forEach((queuedConfig) => {
                 queuedConfig.headers.Authorization = `Bearer ${response.data.data.accessToken}`;
@@ -64,6 +63,8 @@ export const api = (url, method, data = null, isFormData = null) => {
               });
               requestQueue.length = 0;
             } catch (error) {
+              localStorage.clear();
+              window.location.href = "/login";
               return Promise.reject(error);
             } finally {
               isRefreshing = false;

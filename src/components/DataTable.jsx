@@ -41,10 +41,10 @@ const DataTable = ({
         option === "product"
           ? `${row.proCate} | ${row.proDetail} | ${row.material} | ${row.standard} | ${row.component}`
           : option === "productCate"
-            ? row.name
-            : option === "createAudit" || option === "invoiceList"
-              ? row?.user?.name
-              : row?.user?.name,
+          ? row.name
+          : option === "createAudit" || option === "invoiceList"
+          ? row?.user?.name
+          : row?.user?.name,
       lastprocessor: option === "transactionCerti" && row.last_proccesor.name,
       approveby: option === "transactionCerti" && row?.approve_by?.name,
       updatedAt:
@@ -77,7 +77,7 @@ const DataTable = ({
   };
 
   return (
-    <div>
+    <div className="text-left min-w-[1200px] w-full overflow-auto">
       <MDBDataTable
         striped
         bordered

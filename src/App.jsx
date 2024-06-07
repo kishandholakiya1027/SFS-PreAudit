@@ -5,7 +5,6 @@ import Login from "./pages/Login";
 import Main from "./pages/Main";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AccountantProject from "./pages/AccountantProject";
-import { useEffect } from "react";
 import ReviewerProjectMain from "./pages/ReviewerProjectMain";
 import PreAuditDocumentaion from "./pages/PreAuditDocumantation";
 import Organization from "./pages/PreAuditDocumantation/Organization";
@@ -17,17 +16,6 @@ import AuditorDetails from "./pages/AuditSchedule/AuditorDetails";
 import AuditSchedule from "./pages/AuditSchedule/index";
 
 function App() {
-  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
-  const refreshToken = JSON.parse(localStorage.getItem("refreshToken"));
-
-  useEffect(() => {
-    if (accessToken && refreshToken) {
-      setTimeout(() => {
-        localStorage.clear();
-      }, [24 * 60 * 60 * 1000]);
-    }
-  }, [accessToken, refreshToken]);
-
   const router = createBrowserRouter([
     {
       path: "/login",

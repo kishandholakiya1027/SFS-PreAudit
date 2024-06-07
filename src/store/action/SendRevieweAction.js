@@ -30,6 +30,28 @@ export const GetReviewe = (setLoading) => {
   };
 };
 
+export const GetRevieweWithFilter = (filter, setLoading) => {
+  return async (dispatch) => {
+    try {
+      const CurrencyData = await api(`/client/all?${filter}`, "get");
+
+      if (CurrencyData.status === 200) {
+        setLoading(false);
+        dispatch({
+          type: SEND_REVIEWE_SUCCESS,
+          payload: CurrencyData.data.data,
+        });
+      }
+    } catch (error) {
+      setLoading(false);
+      dispatch({
+        type: SEND_REVIEWE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+};
+
 export const GetClientDataRevieweById = (id) => {
   return async (dispatch) => {
     try {

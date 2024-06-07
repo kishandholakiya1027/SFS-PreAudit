@@ -58,22 +58,6 @@ code {
   background-repeat: no-repeat;
 }
 
-.tc::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  background-color: #f5f5f5;
-}
-
-.tc::-webkit-scrollbar {
-  width: 4px;
-  background-color: #f5f5f5;
-}
-
-.tc::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(11, 4, 4, 0.3);
-  background-color: #555;
-}
 .box_shadow {
   box-shadow: 0px 0px 7px 0px #0000001a;
 }
@@ -84,4 +68,28 @@ table {
 
 .dataTables_info {
   display: none;
+}
+
+.tc {
+  transition: 0.4s all;
+}
+
+.tc::-webkit-scrollbar-track {
+  background-color: #f9fcff;
+}
+
+.tc::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: #f9fcff;
+}
+
+.tc::-webkit-scrollbar-thumb {
+  transition: background-color 0.4s;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+.tc:hover::-webkit-scrollbar-thumb {
+  display: block;
 }

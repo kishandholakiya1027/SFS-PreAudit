@@ -1,21 +1,25 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
 import { useRef } from "react";
 import DataTable from "./DataTable";
 import Filter from "../assets/images/Filter.svg";
 import { useDispatch } from "react-redux";
-import { GetAllExpense } from "../store/action/AdminActions/ExpenseAction";
+import { IoMdDownload } from "react-icons/io";
+import { utils, writeFileXLSX } from "xlsx";
+import { GetRevieweWithFilter } from "../store/action/SendRevieweAction";
 
 export function EnhancedTable({
   data,
-  renderRowActions,
-  option,
   title,
   filter,
+  option,
+  fileName,
+  exportData,
+  setLoading,
+  renderRowActions,
 }) {
   const dropdownRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [filters, setFilter] = useState({
     id: "",
     date: "",
@@ -37,6 +41,7 @@ export function EnhancedTable({
     });
   };
   const handleSubmit = () => {
+    setLoading(true);
     const queryString = Object.keys(filters)
       .map(
         (key) =>
@@ -45,36 +50,56 @@ export function EnhancedTable({
       .join("&");
     setShowDropdown(false);
     handleClear();
-    dispatch(GetAllExpense(queryString, setLoading));
+    dispatch(GetRevieweWithFilter(queryString, setLoading));
   };
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const exportFile = useCallback(() => {
+    if (exportData?.length > 0 && fileName) {
+      const ws = utils.json_to_sheet(exportData);
+      const wb = utils.book_new();
+      utils.book_append_sheet(wb, ws, fileName.split(".")[0]);
+      writeFileXLSX(wb, fileName);
+    }
+  }, [exportData, fileName]);
+
   return (
-    <div className="text-right min-h-[calc(100vh-210px)] overflow-x-auto">
+    <div className="text-right min-h-[calc(100vh-210px)]">
       {(title || filter) && (
         <div
-          className={`flex items-center min-w-[1200px] relative ${
+          className={`flex items-center relative ${
             title ? "justify-between" : "justify-end"
           } mt-[17px]`}
           ref={dropdownRef}
         >
           {title && <h1 className="text-[16px] font-[600]">{title}</h1>}
-          {filter && (
-            <div className="">
-              <button
-                className={
-                  "gap-[10px] inline-flex w-full items-center justify-center gap-x-[15px] bg-[#E8ECF0] rounded-[2px] py-[7px] px-[12px] text-sm font-[400] leading-4 text-black"
-                }
-                onClick={toggleDropdown}
-              >
-                {" "}
-                Filter <img src={Filter} />
-              </button>
-            </div>
-          )}
+          <div className="flex items-center gap-[10px]">
+            <button
+              onClick={exportFile}
+              disabled={exportData?.length === 0}
+              className={
+                "inline-flex w-fit items-center justify-center gap-x-1.5 bg-[#106FEC] rounded-[2px] py-[7px] px-[19px] text-[14px] leading-[16px] font-[400] text-white disabled:opacity-80"
+              }
+            >
+              <IoMdDownload />
+              Export
+            </button>
+            {filter && (
+              <div>
+                <button
+                  className={
+                    "inline-flex w-fit items-center justify-center gap-x-[15px] bg-[#E8ECF0] rounded-[2px] py-[7px] px-[12px] text-[14px] leading-[16px] font-[400] text-black"
+                  }
+                  onClick={toggleDropdown}
+                >
+                  Filter <img src={Filter} />
+                </button>
+              </div>
+            )}
+          </div>
           {showDropdown && (
             <ClickAwayListener onClickAway={() => setShowDropdown(false)}>
               <div className="absolute text-left w-[300px] right-0 top-[30px] mt-2 bg-white border border-gray-300 rounded shadow-lg z-50">
@@ -147,7 +172,7 @@ export function EnhancedTable({
           )}
         </div>
       )}
-      <div className="text-left min-w-[1200px] w-full overflow-auto">
+      <div className="w-full overflow-auto tc">
         <DataTable
           data={data}
           renderRowActions={renderRowActions}
