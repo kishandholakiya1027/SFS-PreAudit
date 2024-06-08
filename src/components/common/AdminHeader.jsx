@@ -1,26 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CgLogOut } from "react-icons/cg";
 import { FaChevronDown } from "react-icons/fa";
-import { IoNotificationsOutline, IoSearchOutline } from "react-icons/io5";
+import { IoSearchOutline } from "react-icons/io5";
 import Lang from "../../assets/images/lang1.png";
-import { useSelector } from "react-redux";
+import { VscBell, VscBellDot } from "react-icons/vsc";
+import { useDispatch, useSelector } from "react-redux";
+import { io } from "socket.io-client";
+import {
+  editNotifications,
+  getNotificationByUser,
+} from "../../store/action/notificationAction";
+import Notifications from "../../pages/Notifications";
+
+let socket;
 
 const AdminHeader = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const search = window.location.search;
   const params = new URLSearchParams(search);
   const invoiceId = params.get("id");
-  const popoverDropdownRef = React.createRef();
+  const popoverDropdownRef = createRef();
+  const [allMsg, setAllMsg] = useState([]);
+  const langPopoverDropdownRef = createRef();
   const [headerName, setHeaderName] = useState("");
-  const langPopoverDropdownRef = React.createRef();
+  const [notification, setNotification] = useState(null);
   const admin = JSON.parse(localStorage.getItem("admin"));
+  const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
   const { oneExpanse } = useSelector((state) => state.OneExpenceReducer);
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const [langDropdownPopoverShow, setLangDropdownPopoverShow] =
-    React.useState(false);
+  const { notifications } = useSelector((state) => state.notificationsReducer);
+  const [langDropdownPopoverShow, setLangDropdownPopoverShow] = useState(false);
 
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(!dropdownPopoverShow);
@@ -65,6 +77,45 @@ const AdminHeader = () => {
       setHeaderName("Dashboard");
     }
   }, [location, id, oneExpanse, invoiceId]);
+
+  useEffect(() => {
+    if (notifications?.length > 0) {
+      setAllMsg(notifications);
+    }
+  }, [notifications]);
+
+  useEffect(() => {
+    socket = io(import.meta.env.REACT_APP_PORT || "http://89.116.21.113:5001");
+    socket.on("receive_message", (newMessageReceived) => {
+      if (newMessageReceived?.receiverId === admin?.id) {
+        setNotification(null);
+        setAllMsg((prev) => [newMessageReceived, ...prev]);
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    dispatch(getNotificationByUser(admin?.id));
+  }, []);
+
+  const handleNotification = () => {
+    setNotification(!notification);
+  };
+
+  useEffect(() => {
+    if (notification === false && allMsg?.length > 0) {
+      const data = allMsg?.filter((item) => item.isView === false);
+      data?.length > 0 && dispatch(editNotifications(data, admin?.id));
+    }
+  }, [allMsg, notification]);
+
+  useEffect(() => {
+    setNotification(null);
+  }, []);
 
   return (
     <div className="text-right flex" id="header">
@@ -117,9 +168,17 @@ const AdminHeader = () => {
                 </button>
               </div>
             </div>
-            <span className="span1">
-              <IoNotificationsOutline /> <span className="span2"></span>{" "}
-            </span>
+            <div className="relative flex">
+              <button type="button" onClick={handleNotification}>
+                {allMsg?.filter((item) => item?.isView === false).length ===
+                0 ? (
+                  <VscBell size={20} />
+                ) : (
+                  <VscBellDot size={20} />
+                )}
+              </button>
+              {notification && <Notifications messages={allMsg} />}
+            </div>
             {location.pathname === "/confirm-email" ? (
               <div className="border border-[#94a3b8] rounded">
                 <button

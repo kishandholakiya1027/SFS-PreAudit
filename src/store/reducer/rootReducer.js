@@ -18,6 +18,8 @@ import { countryReducer } from "./countryReducer";
 import { memberRoleReducer } from "./AdminReducer/memberRoleReducer";
 import { queryReducer } from "./queryReducer";
 import { dashboardReducer } from "./dashboardReducer";
+import { notificationsReducer } from "./notificationsReducer";
+import { notificationReducer } from "./notificationReducer";
 
 export const rootReducer = combineReducers({
   currentStepDataReducer,
@@ -36,6 +38,8 @@ export const rootReducer = combineReducers({
   moduleReducer,
   ProductCategoryReducer,
   preAuditReducer,
+  notificationsReducer,
+  notificationReducer,
   AuditorSceduleReducer,
   sendRevieweReducer,
   SendInvoiceReducer,
