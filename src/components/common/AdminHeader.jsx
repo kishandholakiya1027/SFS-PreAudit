@@ -87,7 +87,7 @@ const AdminHeader = () => {
   useEffect(() => {
     socket = io(import.meta.env.REACT_APP_PORT || "http://89.116.21.113:5001");
     socket.on("receive_message", (newMessageReceived) => {
-      if (newMessageReceived?.receiverId === admin?.id) {
+      if (newMessageReceived?.receiverid === admin?.id) {
         setNotification(null);
         setAllMsg((prev) => [newMessageReceived, ...prev]);
       }
