@@ -29,6 +29,8 @@ const AdminHeader = () => {
   const [headerName, setHeaderName] = useState("");
   const [notification, setNotification] = useState(null);
   const admin = JSON.parse(localStorage.getItem("admin"));
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
   const { oneExpanse } = useSelector((state) => state.OneExpenceReducer);
   const { notifications } = useSelector((state) => state.notificationsReducer);
@@ -85,21 +87,25 @@ const AdminHeader = () => {
   }, [notifications]);
 
   useEffect(() => {
-    socket = io(import.meta.env.REACT_APP_PORT || "http://89.116.21.113:5001");
-    socket.on("receive_message", (newMessageReceived) => {
-      if (newMessageReceived?.receiverid === admin?.id) {
-        setNotification(null);
-        setAllMsg((prev) => [newMessageReceived, ...prev]);
-      }
-    });
+    if (admin && accessToken && refreshToken) {
+      socket = io(import.meta.env.VITE_APP_PORT);
+      socket.on("receive_message", (newMessageReceived) => {
+        if (newMessageReceived?.receiverid === admin?.id) {
+          setNotification(null);
+          setAllMsg((prev) => [newMessageReceived, ...prev]);
+        }
+      });
 
-    return () => {
-      socket.disconnect();
-    };
+      return () => {
+        socket.disconnect();
+      };
+    }
   }, []);
 
   useEffect(() => {
-    dispatch(getNotificationByUser(admin?.id));
+    if (admin && accessToken && refreshToken) {
+      dispatch(getNotificationByUser(admin?.id));
+    }
   }, []);
 
   const handleNotification = () => {

@@ -5,8 +5,7 @@ const requestQueue = [];
 let isRefreshing = false;
 
 export const api = (url, method, data = null, isFormData = null) => {
-  // const port = import.meta.env.REACT_APP_PORT || "http://localhost:5001";
-  const port = import.meta.env.REACT_APP_PORT || "http://89.116.21.113:5001";
+  const port = import.meta.env.VITE_APP_PORT;
   const token = JSON.parse(localStorage.getItem("accessToken"));
   const Instanse = axios.create({
     baseURL: `${port}/v1/api`,
