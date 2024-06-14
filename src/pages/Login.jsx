@@ -166,7 +166,7 @@ const Login = () => {
                           htmlFor="RememberMe"
                           className="text-[16px] leading-[18px] font-[300]"
                         >
-                          Remember Me
+                          Remember me
                         </label>
                       </div>
                       <button className="text-[16px] leading-[19px] font-[400] cursor-pointer text-[#106FEC] hover:underline dark:text-blue-500">
