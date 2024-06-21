@@ -10,7 +10,7 @@ const ReviewerProjectMain = () => {
     {
       id: "1",
       label: "Pre Audit Assessment Review",
-      link: `/pre_audit/project/${id}/review/organisation`,
+      link: `/pre_audit/project/${id}/review?unit=1`,
       active: `/pre_audit/project/${id}/review`,
       content: "Content for Tab 1",
     },

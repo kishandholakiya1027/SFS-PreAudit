@@ -16,10 +16,10 @@ export const getOneExpense = (id, setLoading) => {
         dispatch({ type: ONE_EXPENSE_SUCCESS, payload: ExpenseData.data.data });
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error:", error);
       dispatch({
         type: ONE_EXPENSE_FAIL,
-        payload: error?.response?.data?.message,
+        payload: error?.message,
       });
     }
   };
@@ -36,7 +36,7 @@ export const GetAllExpense = (filter, setLoading) => {
       }
     } catch (error) {
       setLoading(false);
-      dispatch({ type: EXPENSE_FAIL, payload: error?.response?.data?.message });
+      dispatch({ type: EXPENSE_FAIL, payload: error?.message });
     }
   };
 };
@@ -51,7 +51,7 @@ export const UpdateExpense = (id, data, setLoading3) => {
       }
     } catch (error) {
       setLoading3(false);
-      dispatch({ type: EXPENSE_FAIL, payload: error?.response?.data?.message });
+      dispatch({ type: EXPENSE_FAIL, payload: error?.message });
     }
   };
 };
@@ -65,7 +65,7 @@ export const PostExpense = (user) => {
       }
     } catch (error) {
       toast.error(error?.response?.message);
-      dispatch({ type: EXPENSE_FAIL, payload: error?.response?.data?.message });
+      dispatch({ type: EXPENSE_FAIL, payload: error?.message });
     }
   };
 };

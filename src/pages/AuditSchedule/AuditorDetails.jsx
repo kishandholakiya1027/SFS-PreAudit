@@ -132,7 +132,7 @@ const AuditorDetails = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAuditorScheduleByUserId(id));
+    dispatch(getAuditorScheduleByUserId(id, setLoading2));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -145,7 +145,7 @@ const AuditorDetails = () => {
   }, [location, t]);
 
   useEffect(() => {
-    if (audit && memberList?.length) {
+    if (audit?.auditor && memberList?.length) {
       setShow(true);
       setData((prev) => {
         return {
@@ -158,7 +158,6 @@ const AuditorDetails = () => {
       });
       const auditor = memberList.find((item) => item.id === +audit?.auditor);
       setLocation(auditor);
-      setLoading2(false);
     }
   }, [audit, memberList]);
 

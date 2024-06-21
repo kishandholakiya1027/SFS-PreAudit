@@ -39,6 +39,21 @@ export const GetOneClientInfo = (id, setLoading) => {
   };
 };
 
+export const GetOneClientInfo2 = (id, setIsLoading2) => {
+  return async (dispatch) => {
+    try {
+      const CurrencyData = await api(`/client_info/one/${id}`, "get");
+      if (CurrencyData.status === 200) {
+        setIsLoading2(false);
+        dispatch({ type: CLIENT_SUCCESS, payload: CurrencyData.data.data });
+      }
+    } catch (error) {
+      setIsLoading2(false);
+      dispatch({ type: CLIENT_FAIL, payload: error?.response?.data?.message });
+    }
+  };
+};
+
 export const PostClientInfo = (user) => {
   return async (dispatch) => {
     try {
@@ -130,14 +145,16 @@ export const GetPayerCompany = () => {
   };
 };
 
-export const GetPayerInfoById = (id) => {
+export const GetPayerInfoById = (id, setLoading) => {
   return async (dispatch) => {
     try {
-      const CurrencyData = await api(`/getpayerclient/${id}`, "get");
+      const CurrencyData = await api(`/location_process/user/${id}`, "get");
       if (CurrencyData.status === 200) {
+        setLoading(false);
         dispatch({ type: PAYER_SUCCESS, payload: CurrencyData.data.data });
       }
     } catch (error) {
+      setLoading(false);
       dispatch({ type: PAYER_FAIL, payload: error.response.data.message });
     }
   };
@@ -233,9 +250,9 @@ export const UpdateCertificationStatus = (user) => {
         dispatch(GetPayerInfo());
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
-      dispatch({ type: MANAGE_FAIL, payload: error.response.data.message });
+      console.log("Error:", error);
+      toast.error(error?.message);
+      dispatch({ type: MANAGE_FAIL, payload: error?.message });
     }
   };
 };
@@ -248,7 +265,22 @@ export const GetCertificationStatusById = (id) => {
         dispatch({ type: MANAGE_SUCCESS, payload: CurrencyData.data.data });
       }
     } catch (error) {
-      dispatch({ type: MANAGE_FAIL, payload: error.response.data.message });
+      dispatch({ type: MANAGE_FAIL, payload: error?.message });
+    }
+  };
+};
+
+export const GetCertificationStatusById2 = (id, setLoading) => {
+  return async (dispatch) => {
+    try {
+      const CurrencyData = await api(`/certification_status/user/${id}`, "get");
+      if (CurrencyData.status === 200) {
+        setLoading(false);
+        dispatch({ type: MANAGE_SUCCESS, payload: CurrencyData.data.data });
+      }
+    } catch (error) {
+      setLoading(false);
+      dispatch({ type: MANAGE_FAIL, payload: error?.message });
     }
   };
 };
@@ -261,7 +293,7 @@ export const UpdatePayerInfo = (user, id) => {
         dispatch(GetPayerInfo());
       }
     } catch (error) {
-      dispatch({ type: PAYER_FAIL, payload: error.response.data.message });
+      dispatch({ type: PAYER_FAIL, payload: error?.message });
     }
   };
 };

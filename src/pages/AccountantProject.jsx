@@ -145,7 +145,7 @@ const AccountantProject = () => {
         type="button"
         className="text-[14px]  text-[#000] rounded p-[6px]"
         onClick={() =>
-          navigate(`/pre_audit/project/${row.userid}/review/organisation`)
+          navigate(`/pre_audit/project/${row.userid}/review?unit=1`)
         }
       >
         <LuEye size={20} />

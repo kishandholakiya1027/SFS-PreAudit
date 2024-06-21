@@ -11,7 +11,7 @@ const regenerateToken = async () => {
 
   try {
     const response = await axios.post(
-      `${port}/v1/api/user/regenerate_token`,
+      `${port}/v1/api/admin/regenerate_token`,
       { deviceid },
       {
         headers: {

@@ -39,7 +39,7 @@ export const editNotifications = (data, id) => {
       await api(`/notification/edit`, "patch", { data });
       dispatch(getNotificationByUser(id));
     } catch (error) {
-      console.log("error", error);
+      console.log("Error:", error);
     }
   };
 };

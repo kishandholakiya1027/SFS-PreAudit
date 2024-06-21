@@ -18,17 +18,19 @@ export const GetAuditorScedule = () => {
   };
 };
 
-export const getAuditorScheduleByUserId = (id) => {
+export const getAuditorScheduleByUserId = (id, setLoading2) => {
   return async (dispatch) => {
     try {
       const AuditorSceduleData = await api(`/audit_schedule/user/${id}`, "get");
       if (AuditorSceduleData.status === 200) {
+        setLoading2(false);
         dispatch({
           type: AUDIT_SUCCESS,
           payload: AuditorSceduleData.data.data,
         });
       }
     } catch (error) {
+      setLoading2(false);
       dispatch({ type: AUDIT_FAIL, payload: error?.message });
     }
   };

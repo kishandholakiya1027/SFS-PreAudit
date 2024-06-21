@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Model from "./common/Model";
 import { GetUser } from "../store/action/registerAction";
 import { api } from "../axios/api";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { LoaderIcon } from "react-hot-toast";
 import { dashboardData } from "../store/action/dashboard";
 
@@ -226,9 +226,10 @@ const ClientDashboard = () => {
         {cardData?.length > 0 &&
           cardData.map((item, i) => {
             return (
-              <div
+              <Link
                 key={i}
-                className="min-w-[215px] w-full h-[130px] bg-white rounded-[10px] border-2 border-[#EFF6FE] col-span-1 hover:shadow-md hover:bg-slate-200 hover:border-slate-200"
+                to={!loading && item.link}
+                className="min-w-[215px] w-full h-[130px] bg-white rounded-[10px] border-2 border-[#EFF6FE] col-span-1 hover:shadow-md hover:bg-slate-200 hover:border-slate-200 transition-all duration-150 cursor-pointer"
               >
                 {loading ? (
                   <div className="flex items-center justify-center w-full h-full">
@@ -247,7 +248,7 @@ const ClientDashboard = () => {
                     </div>
                   </>
                 )}
-              </div>
+              </Link>
             );
           })}
       </div>

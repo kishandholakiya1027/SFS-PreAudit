@@ -5,6 +5,7 @@ import { GetCountry } from "../../store/action/countryAction";
 import {
   GetCertificationStatusById,
   GetOneClientInfo,
+  GetPayerInfoById,
 } from "../../store/action/manageAction";
 import { LoaderIcon } from "react-hot-toast";
 import QuertRaise from "../../components/common/QuertRaise";
@@ -18,7 +19,7 @@ const CompanyDetails = () => {
   const [loading, setLoading] = useState(true);
   const [standards, setStandards] = useState([]);
   const [isSubmit, setIsSubmit] = useState(false);
-  const [loading2, setLoading2] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(true);
   const [processeUnit, setProcesseUnit] = useState([]);
   const admin = JSON.parse(localStorage.getItem("admin"));
   const { country } = useSelector((state) => state.countryReducer);
@@ -29,11 +30,14 @@ const CompanyDetails = () => {
   useEffect(() => {
     if (clientInfo && country?.length > 0) {
       setFdata(clientInfo);
-      setCname(country?.find((item) => item.id === clientInfo?.country)?.name);
+      setCname(
+        country?.find((item) => item.name === clientInfo?.country)?.name
+      );
     }
   }, [clientInfo, country]);
 
   useEffect(() => {
+    dispatch(GetPayerInfoById(id, setIsLoading2));
     dispatch(GetCertificationStatusById(id));
     dispatch(GetOneClientInfo(id, setLoading));
   }, [dispatch, id]);
@@ -44,25 +48,38 @@ const CompanyDetails = () => {
 
   useEffect(() => {
     if (payer) {
-      const trueProcessValues = Object?.keys(payer?.processeUnit)?.filter(
-        (key) => payer?.processeUnit[key] === true
-      );
-      setProcesseUnit(trueProcessValues?.join(" , "));
+      let trueKeys = [];
+      payer?.units?.forEach((company) => {
+        const processeUnit = company.processeUnit;
+        Object.keys(processeUnit).forEach((key) => {
+          if (processeUnit[key] === true) {
+            trueKeys.push(key);
+          }
+        });
+      });
+
+      setProcesseUnit(trueKeys?.join(" , "));
     }
   }, [payer]);
 
   useEffect(() => {
     if (data) {
-      const trueStanValues = Object.keys(data?.standards)?.filter(
-        (key) => data?.standards[key] === true
-      );
-      setStandards(trueStanValues?.join(" , "));
+      let trueKeys = [];
+      data?.certifications?.forEach((company) => {
+        const stands = company.standards;
+        Object.keys(stands).forEach((key) => {
+          if (stands[key] === true) {
+            trueKeys.push(key);
+          }
+        });
+      });
+      setStandards(trueKeys?.join(" , "));
     }
   }, [data]);
 
   return (
     <div className="flex flex-col justify-between h-full gap-5">
-      {loading ? (
+      {loading || isLoading2 ? (
         <div className="flex items-center justify-center w-full h-full min-h-[calc(100vh-281px)]">
           <LoaderIcon className="!w-12 !h-12 !border-r-[#106FEC]" />
         </div>
@@ -237,21 +254,14 @@ const CompanyDetails = () => {
         </button>
         <button
           type="button"
-          disabled={loading2}
           onClick={() =>
             navigate(`/pre_audit/project/${id}/scheduling/auditor_details`)
           }
-          className={`text-[16px] font-Roboto font-[500] leading-[18px] text-[#fff] py-[8px] px-[40px] bg-[#106FEC] rounded-[2px] w-[230px] flex items-center justify-center ${
-            loading2 && "opacity-70"
-          }`}
+          className={`text-[16px] font-Roboto font-[500] leading-[18px] text-[#fff] py-[8px] px-[40px] bg-[#106FEC] rounded-[2px] w-[230px] flex items-center justify-center`}
         >
-          {loading2 ? (
-            <LoaderIcon className="!w-[18px] !h-[18px]" />
-          ) : (
-            "Select Auditors"
-          )}
+          Select Auditors
         </button>
-      </div>{" "}
+      </div>
       <QuertRaise
         isSubmit={isSubmit}
         setIsSubmit={setIsSubmit}

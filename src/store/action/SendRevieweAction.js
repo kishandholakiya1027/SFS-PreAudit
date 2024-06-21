@@ -3,6 +3,7 @@ import { api } from "../../axios/api";
 import {
   CLIENTDATA_FAIL,
   CLIENTDATA_SUCCESS,
+  SEND_REVIEWE_FAIL,
   SEND_REVIEWE_SUCCESS,
   SEND_REVIEWE__FAIL,
 } from "../actionType";
@@ -24,7 +25,7 @@ export const GetReviewe = (setLoading) => {
       setLoading(false);
       dispatch({
         type: SEND_REVIEWE__FAIL,
-        payload: error.response.data.message,
+        payload: error?.message,
       });
     }
   };
@@ -46,7 +47,7 @@ export const GetRevieweWithFilter = (filter, setLoading) => {
       setLoading(false);
       dispatch({
         type: SEND_REVIEWE_FAIL,
-        payload: error.response.data.message,
+        payload: error?.message,
       });
     }
   };
@@ -60,7 +61,7 @@ export const GetClientDataRevieweById = (id) => {
         dispatch({ type: CLIENTDATA_SUCCESS, payload: ClientData.data.data });
       }
     } catch (error) {
-      dispatch({ type: CLIENTDATA_FAIL, payload: error.response.data.message });
+      dispatch({ type: CLIENTDATA_FAIL, payload: error?.message });
     }
   };
 };
@@ -73,7 +74,7 @@ export const GetRevieweById = async (id) => {
       return CurrencyData.data.data[0];
     }
   } catch (error) {
-    console.log("ERROR:", error);
+    console.log("Error:", error);
   }
 };
 
@@ -86,7 +87,7 @@ export const DeleteRevieweById = async (id, dispatch) => {
       toast.success("Data delete successfully.");
     }
   } catch (error) {
-    console.log("ERROR:", error);
+    console.log("Error:", error);
   }
 };
 
@@ -102,7 +103,7 @@ export const SendReviewe = (data, Navigate, setIsSubmit) => {
       toast.error("Something Wrong");
       dispatch({
         type: SEND_REVIEWE__FAIL,
-        payload: error.response.data.message,
+        payload: error?.message,
       });
     }
   };
@@ -126,7 +127,7 @@ export const ApproveData = (data, setIsLoading, setActiveTab, setStep) => {
       }
     } catch (error) {
       setIsLoading(false);
-      toast.error(error.response.data.message);
+      toast.error(error?.message);
     }
   };
 };
@@ -139,7 +140,7 @@ export const UpdateClientData = (id) => {
         toast.success(CurrencyData.data.message);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.message);
     }
   };
 };

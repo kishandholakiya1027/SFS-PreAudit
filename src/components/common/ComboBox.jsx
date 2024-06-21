@@ -3,7 +3,13 @@ import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 import { useState } from "react";
 
-const ComboBox = ({ option, setLocation, location, color = false }) => {
+const ComboBox = ({
+  option,
+  setLocation,
+  location,
+  color = false,
+  disabled,
+}) => {
   const [query, setQuery] = useState("");
 
   const filteredPeople =
@@ -14,7 +20,11 @@ const ComboBox = ({ option, setLocation, location, color = false }) => {
         });
   return (
     <div className="mx-auto w-full p-0 relative">
-      <Combobox value={location} onChange={(value) => setLocation(value)}>
+      <Combobox
+        disabled={disabled}
+        value={location}
+        onChange={(value) => setLocation(value)}
+      >
         <div className="relative">
           <Combobox.Input
             className={clsx(

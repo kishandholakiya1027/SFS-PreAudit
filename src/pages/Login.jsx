@@ -61,7 +61,7 @@ const Login = () => {
           setLoading(true);
           dispatch(adminLogin(admin, navigate, setLoading));
         } catch (error) {
-          console.log("Error:", error.response);
+          console.log("Error:", error);
         }
       } else {
         setUserError((prev) => ({ ...prev, email: "This Field is Requied" }));
