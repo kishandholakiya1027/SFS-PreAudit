@@ -8,7 +8,7 @@ const QuertRaise = ({
   setIsSubmit,
   handleClose,
   memberid,
-  userid,
+  companyid,
 }) => {
   const [query, setQuery] = useState({
     comment: "",
@@ -25,7 +25,7 @@ const QuertRaise = ({
     if (query.comment && query.title) {
       const data = {
         memberid: memberid,
-        userid: userid,
+        companyid: companyid,
         query: query.comment,
         title: query.title,
       };

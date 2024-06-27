@@ -37,6 +37,7 @@ const DataTable = ({
         ) : (
           <span className="text-[#FF914D]">Pending</span>
         ),
+      reviewer: row?.member?.name,
       actions: renderRowActions !== null && renderRowActions(row),
     })),
   };

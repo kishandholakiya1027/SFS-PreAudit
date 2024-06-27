@@ -103,7 +103,7 @@ const AuditorDetails = () => {
     if (data?.from && data?.to && data?.email && data?.contact) {
       setLoading(true);
       const payload = {
-        userid: id,
+        companyid: id,
         auditor: location?.id,
         dateFrom: data.from,
         dateTo: data.to,
@@ -327,7 +327,7 @@ const AuditorDetails = () => {
         setIsSubmit={setIsSubmit}
         handleClose={() => setIsSubmit(false)}
         memberid={admin?.id}
-        userid={id}
+        companyid={id}
       />
     </div>
   );

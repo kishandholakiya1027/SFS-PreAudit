@@ -526,7 +526,7 @@ const Organization = () => {
         setIsSubmit={setIsSubmit}
         handleClose={() => setIsSubmit(false)}
         memberid={admin?.id}
-        userid={id}
+        companyid={id}
       />
     </div>
   );

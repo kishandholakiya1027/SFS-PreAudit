@@ -148,7 +148,7 @@ export const GetPayerCompany = () => {
 export const GetPayerInfoById = (id, setLoading) => {
   return async (dispatch) => {
     try {
-      const CurrencyData = await api(`/location_process/user/${id}`, "get");
+      const CurrencyData = await api(`/location_process/get/${id}`, "get");
       if (CurrencyData.status === 200) {
         setLoading(false);
         dispatch({ type: PAYER_SUCCESS, payload: CurrencyData.data.data });

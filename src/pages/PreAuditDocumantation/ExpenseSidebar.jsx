@@ -39,7 +39,7 @@ const ExpenseSidebar = () => {
               } pl-[14px] py-[15px] pr-[27px] group  text-sm  gap-3.5 font-medium hover:bg-[#1265D2] max-w-[134px] h-[64px] flex items-center ease-in-out duration-100`}
             >
               <h2
-                className={`duration-500 break-words w-[96px] group-hover:text-[#fff]`}
+                className={`duration-100 break-words w-[96px] group-hover:text-[#fff]`}
               >
                 {menu?.name}
               </h2>
