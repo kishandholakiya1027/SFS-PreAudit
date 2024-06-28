@@ -2,15 +2,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { BsArrowRightShort } from "react-icons/bs";
 import TeamMember from "./TeamMember";
 import DashCompany from "./DashCompany";
-import Assessments from "./Assessments";
-import Appointments from "./Appointments";
 import { useDispatch, useSelector } from "react-redux";
 import Model from "./common/Model";
 import { GetUser } from "../store/action/registerAction";
 import { api } from "../axios/api";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { LoaderIcon } from "react-hot-toast";
 import { dashboardData } from "../store/action/dashboard";
+import Notification from "./common/Notification";
 
 const cards = [
   {
@@ -39,10 +38,10 @@ const ClientDashboard = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const { user } = useSelector((state) => state.UserReducer);
   const token = localStorage.getItem("accessToken");
+  const { setNotification } = useOutletContext();
   const [cardData, setCardData] = useState(cards);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  const location = useLocation();
   const { dashboard } = useSelector((state) => state.dashboardReducer);
   const [data, setData] = useState({
     password: "",
@@ -256,10 +255,9 @@ const ClientDashboard = () => {
         <div className="col-span-5">
           <TeamMember />
           <DashCompany />
-          <Assessments />
         </div>
         <div className="col-span-3">
-          <Appointments />
+          <Notification setNotification={setNotification} />
         </div>
       </div>
       <Model

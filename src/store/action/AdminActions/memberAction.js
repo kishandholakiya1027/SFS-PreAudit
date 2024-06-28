@@ -20,15 +20,17 @@ export const GetMembersByRole = (role) => {
   };
 };
 
-export const GetMembers = () => {
+export const GetMembers = (setLoading) => {
   return async (dispatch) => {
     try {
       const MemberData = await api(`/member/all`, "get");
       if (MemberData.status === 200) {
+        setLoading(false);
         dispatch({ type: MEMBER_SUCCESS, payload: MemberData.data.data });
       }
     } catch (error) {
-      dispatch({ type: MEMBER_FAIL, payload: error?.response.data.message });
+      setLoading(false);
+      dispatch({ type: MEMBER_FAIL, payload: error?.message });
     }
   };
 };

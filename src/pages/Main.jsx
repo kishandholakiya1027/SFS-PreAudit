@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/common/Sidebar";
 import { Outlet, useNavigate } from "react-router-dom";
 import AdminHeader from "../components/common/AdminHeader";
 
 const Main = () => {
+  const navigate = useNavigate();
+  const [notification, setNotification] = useState(null);
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!accessToken || !refreshToken) {
@@ -22,8 +23,11 @@ const Main = () => {
         <Sidebar />
       </aside>
       <main className="w-full h-full overflow-hidden">
-        <AdminHeader />
-        <Outlet />
+        <AdminHeader
+          notification={notification}
+          setNotification={setNotification}
+        />
+        <Outlet context={{ notification, setNotification }} />
       </main>
     </div>
   );

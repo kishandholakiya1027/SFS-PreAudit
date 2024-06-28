@@ -15,7 +15,7 @@ import Notifications from "../../pages/Notifications";
 
 let socket;
 
-const AdminHeader = () => {
+const AdminHeader = ({ notification, setNotification }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,7 +27,6 @@ const AdminHeader = () => {
   const [allMsg, setAllMsg] = useState([]);
   const langPopoverDropdownRef = createRef();
   const [headerName, setHeaderName] = useState("");
-  const [notification, setNotification] = useState(null);
   const admin = JSON.parse(localStorage.getItem("admin"));
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");

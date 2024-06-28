@@ -32,7 +32,11 @@ const AccountantProject = () => {
   const { reviewer } = useSelector((state) => state.sendRevieweReducer);
 
   useEffect(() => {
-    dispatch(GetReviewe(setLoading));
+    if (reviewer) {
+      dispatch(GetReviewe(setLoading));
+    } else {
+      setLoading(false);
+    }
   }, [dispatch]);
 
   const pendingData = useMemo(() => {

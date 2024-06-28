@@ -33,6 +33,21 @@ export const getNotificationByUser = (id) => {
   };
 };
 
+export const getNotificationByUser2 = (id, setLoading) => {
+  return async (dispatch) => {
+    try {
+      const res = await api(`/notification/user/${id}`, "get");
+      if (res.status === 200) {
+        setLoading(false);
+        dispatch({ type: NOTIFICATIONS_SUCCESS, payload: res.data.data });
+      }
+    } catch (error) {
+      setLoading(false);
+      dispatch({ type: NOTIFICATIONS_FAIL, payload: error?.message });
+    }
+  };
+};
+
 export const editNotifications = (data, id) => {
   return async (dispatch) => {
     try {
