@@ -1,5 +1,7 @@
 import { toast } from "react-hot-toast";
 import { api } from "../../../axios/api";
+import Cookies from "js-cookie";
+import moment from "moment";
 import {
   MEMBER_FAIL,
   MEMBERROLE_FAIL,
@@ -60,6 +62,11 @@ export const adminLogin = (user, navigate, setLoading) => {
               name: MemberData.data.data.name,
               email: MemberData.data.data.email,
             })
+          );
+          Cookies.set(
+            "expire",
+            moment.utc().format("YYYY-MM-DD HH:mm:ss.SSS[Z]"),
+            { expires: 1 }
           );
           setLoading(false);
           navigate("/pre_audit/dashboard");
