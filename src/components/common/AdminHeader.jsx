@@ -123,9 +123,12 @@ const AdminHeader = ({ notification, setNotification }) => {
   }, []);
 
   return (
-    <div className="text-right flex" id="header">
-      <div className="py-2 px-8 w-full bg-white box_shadow">
-        <div className="flex items-center gap-[10px] justify-between relative ">
+    <div
+      className="text-right flex fixed left-[140px] right-0 top-0 z-10"
+      id="header"
+    >
+      <div className="py-2 2xl:px-10 px-6 w-full bg-white box_shadow">
+        <div className="flex items-center gap-[10px] justify-between relative">
           <button type="button" className="text-[18px] font-[500] capitalize">
             {headerName}
           </button>

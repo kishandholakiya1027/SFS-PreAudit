@@ -17,6 +17,7 @@ export function EnhancedTable({
   exportData,
   setLoading,
   renderRowActions,
+  responsive = false,
 }) {
   const dropdownRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -67,7 +68,7 @@ export function EnhancedTable({
   }, [exportData, fileName]);
 
   return (
-    <div className="text-right min-h-[calc(100vh-210px)]">
+    <div className="text-right 2xl:min-h-[calc(100vh-194px)] min-h-[calc(100vh-162px)]">
       {(title || filter) && (
         <div
           className={`flex items-center relative ${
@@ -177,6 +178,7 @@ export function EnhancedTable({
           data={data}
           renderRowActions={renderRowActions}
           option={option ? option : "proApp"}
+          responsive={responsive}
         />
       </div>
     </div>

@@ -28,7 +28,7 @@ const ComboBox = ({
         <div className="relative">
           <Combobox.Input
             className={clsx(
-              "w-full border py-2 pr-8 text-[14px] text-black focus:outline-none leading-4 font-[400] px-2",
+              "w-full border 2xl:text-sm text-[12px] px-2 py-[6px] border-[#D2D8DD] rounded-sm pr-8 text-black",
               color ? "bg-white" : "bg-white/5"
             )}
             displayValue={(person) => person?.name}

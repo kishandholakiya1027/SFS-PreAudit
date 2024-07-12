@@ -220,7 +220,7 @@ const ClientDashboard = () => {
   );
 
   return (
-    <div className="min-h-[calc(100vh-57px)] p-[40px] bg-[#F9FCFF]">
+    <div className="min-h-[calc(100vh-57px)] 2xl:p-10 p-6 bg-[#F9FCFF]">
       <div className="grid grid-cols-5 gap-[30px]">
         {cardData?.length > 0 &&
           cardData.map((item, i) => {
@@ -228,7 +228,7 @@ const ClientDashboard = () => {
               <Link
                 key={i}
                 to={!loading && item.link}
-                className="min-w-[215px] w-full h-[130px] bg-white rounded-[10px] border-2 border-[#EFF6FE] col-span-1 hover:shadow-md hover:bg-slate-200 hover:border-slate-200 transition-all duration-150 cursor-pointer"
+                className="min-w-[215px] w-full 2xl:h-[130px] h-[99px] bg-white rounded-[10px] border-2 border-[#EFF6FE] col-span-1 hover:shadow-md hover:bg-slate-200 hover:border-slate-200 transition-all duration-150 cursor-pointer"
               >
                 {loading ? (
                   <div className="flex items-center justify-center w-full h-full">
@@ -236,13 +236,17 @@ const ClientDashboard = () => {
                   </div>
                 ) : (
                   <>
-                    <div className="p-[12px] flex justify-end">
+                    <div className="2xl:p-3 pt-2 pr-2 flex justify-end">
                       <BsArrowRightShort className="w-[16px] h-[16px] text-[#116CE3]" />
                     </div>
-                    <div className="flex items-end justify-between p-[20px] pt-[3px]">
+                    <div className="flex items-end justify-between 2xl:px-5 2xl:pb-5 px-3 pb-3">
                       <div>
-                        <h3 className="text-[28px] font-[500]">{item.count}</h3>
-                        <p className="text-[14px] font-[300]">{item.title}</p>
+                        <h3 className="2xl:text-[28px] text-[24px] font-[500]">
+                          {item.count}
+                        </h3>
+                        <p className="2xl:text-[14px] text-[12px] font-[300]">
+                          {item.title}
+                        </p>
                       </div>
                     </div>
                   </>
@@ -251,7 +255,7 @@ const ClientDashboard = () => {
             );
           })}
       </div>
-      <div className="mt-[40px] grid grid-cols-8 gap-[36px]">
+      <div className="2xl:mt-10 mt-5 grid grid-cols-8 2xl:gap-9 gap-6">
         <div className="col-span-5">
           <TeamMember />
           <DashCompany />

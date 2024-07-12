@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../store/action/AdminActions/memberAction";
 import LoginLogo from "../assets/images/LoginLogo.svg";
 import LoginBanner from "../assets/images/LoginBanner.svg";
-import { numberRegx } from "../utils/constant";
+import { emailRegx, numberRegx } from "../utils/constant";
 import { LoaderIcon } from "react-hot-toast";
 
 const Login = () => {
@@ -28,11 +28,11 @@ const Login = () => {
 
     if (name === "email") {
       if (!value) {
-        setUserError((prev) => ({ ...prev, [name]: "This Field is Requied" }));
-      } else if (!value.match(numberRegx)) {
+        setUserError((prev) => ({ ...prev, [name]: "Please enter email" }));
+      } else if (!value.match(emailRegx)) {
         setUserError((prev) => ({
           ...prev,
-          [name]: "Please Enter Valid Email",
+          [name]: "Please enter valid email",
         }));
       } else {
         setUserError((prev) => ({ ...prev, [name]: "" }));
@@ -41,7 +41,7 @@ const Login = () => {
 
     if (name === "password") {
       if (!value) {
-        setUserError((prev) => ({ ...prev, [name]: "This Field is Requied" }));
+        setUserError((prev) => ({ ...prev, [name]: "Please enter password" }));
       } else {
         setUserError((prev) => ({ ...prev, [name]: "" }));
       }
@@ -64,11 +64,21 @@ const Login = () => {
           console.log("Error:", error);
         }
       } else {
-        setUserError((prev) => ({ ...prev, email: "This Field is Requied" }));
-        setUserError((prev) => ({
-          ...prev,
-          password: "This Field is Requied",
-        }));
+        if (!admin.email) {
+          setUserError((prev) => ({ ...prev, email: "Please enter email" }));
+        } else if (!admin.email.match(emailRegx)) {
+          setUserError((prev) => ({
+            ...prev,
+            email: "Please enter valid email",
+          }));
+        }
+
+        if (!admin.password) {
+          setUserError((prev) => ({
+            ...prev,
+            password: "Please enter password",
+          }));
+        }
       }
     }
   };
@@ -83,32 +93,38 @@ const Login = () => {
       <div className="h-screen w-full flex items-center justify-center mx-auto">
         <div className="bg-white dark:bg-gray-900 w-full min-h-[90vh] h-auto mx-auto shadow-md overflow-hidden overflow-y-auto">
           <div className="flex items-center justify-center py-8 mx-auto lg:py-0">
-            <div className="w-1/2 bg-[#106FEC] h-screen flex items-center justify-center pt-[106px] pb-[28px]">
-              <div className="flex flex-col justify-between h-[calc(100vh-134px)]">
+            <div className="w-1/2 bg-[#106FEC] h-screen flex items-center justify-center 2xl:pt-[106px] pt-[206px] pb-[28px] 2xl:px-0 px-3">
+              <div className="flex flex-col justify-between 2xl:h-[calc(100vh-134px)] h-[calc(100vh-240px)]">
                 <div>
                   <div className="mb-4 text-left">
                     <img
                       src={LoginLogo}
                       alt="LoginImg"
-                      className="object-contain"
+                      className="2xl:w-[99px] w-[80px]"
                     />
                   </div>
-                  <h2 className="text-[30px] font-[400] leading-[35px] text-[#fff] mb-5">
+                  <h2 className="2xl:text-[30px] text-[24px] font-[400] leading-[35px] text-[#fff] 2xl:mb-5 mb-2">
                     Delivering Quality
                   </h2>
-                  <p className="text-[14px] leading-[20px] text-[#fff] max-w-[450px] font-[400] mb-12">
+                  <p className="2xl:text-[14px] text-[12px] leading-[20px] text-[#fff] max-w-[450px] font-[400] mb-12">
                     SFS is dedicated to bringing textile testing and our
                     expertise to those who need it the most. Let's work
                     together!
                   </p>
-                  <img src={LoginBanner} alt="LoginBanner" />
+                  <img
+                    src={LoginBanner}
+                    alt="LoginBanner"
+                    className="xl:h-auto h-[200px] 2xl:block 2xl:mx-0 flex mx-auto"
+                  />
                 </div>
                 <div className="text-center text-white">
-                  <p className="text-[14px] font-[400] leading-[17px] mb-[6px]">
+                  <p className="2xl:text-[14px] text-[12px] font-[400] leading-[17px] 2xl:mb-[6px] mb-0">
                     Questions?{" "}
-                    <span className="font-[700]">support@sfs.com</span>
+                    <span className="2xl:font-[700] font-[600]">
+                      support@sfs.com
+                    </span>
                   </p>
-                  <p className="text-[14px] font-[400] leading-[17px]">
+                  <p className="2xl:text-[14px] text-[10px] font-[400] leading-[17px]">
                     SFS is one of the global leaders in auditing and testing for
                     filled textiles.
                   </p>
@@ -135,7 +151,7 @@ const Login = () => {
                       />
                     </div>
                     {userError.email && (
-                      <p className="text-[#ff0000] text-[12px] pt-2 capitalize text-start">
+                      <p className="text-[10px] text-[#ff0000] pt-1 text-start">
                         {userError.email}
                       </p>
                     )}
@@ -153,7 +169,7 @@ const Login = () => {
                       />
                     </div>
                     {userError.password && (
-                      <p className="text-[#ff0000] text-[12px] pt-2 capitalize text-start">
+                      <p className="text-[10px] text-[#ff0000] pt-1 text-start">
                         {userError.password}
                       </p>
                     )}

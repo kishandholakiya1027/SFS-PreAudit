@@ -28,18 +28,20 @@ const DashCompany = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-[10px]">
-        <h3 className="text-[14px] font-[500] text-[#323232]">Invoice List</h3>
+        <h3 className="2xl:text-[14px] text-[12px] font-[500] text-[#323232]">
+          Invoice List
+        </h3>
         <Link to="/audit/project">
-          <MdAddCircleOutline className="w-[21px] h-[21px] text-[#106FEC]" />
+          <MdAddCircleOutline className="2xl:w-[21px] 2xl:h-[21px] w-4 h-4 text-[#106FEC]" />
         </Link>
       </div>
-      <div className="bg-[#fff] rounded-[10px] border-2 border-[#EFF6FE] p-[22px] h-full min-h-[268px]">
+      <div className="bg-[#fff] rounded-[10px] border-2 border-[#EFF6FE] 2xl:p-[22px] p-4 h-full max-h-[268px]">
         {isLoading ? (
-          <div className="flex items-center justify-center w-full h-full min-h-[196px] mb-6">
+          <div className="flex items-center justify-center w-full h-full min-h-[223px]">
             <LoaderIcon className="!w-[18px] !h-[18px] !border-r-[#106FEC]" />
           </div>
         ) : data?.length > 0 ? (
-          <table className="w-full !bg-white mb-6">
+          <table className="w-full !bg-white">
             <thead>
               <tr>
                 <th className="text-[#565E60] text-[12px] font-[500] leading-[18px] -tracking-[0.24px] text-left pb-[15px] border-b-2 border-[#EFF6FE]">

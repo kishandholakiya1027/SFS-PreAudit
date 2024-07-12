@@ -232,22 +232,22 @@ const PreAuditDocumentaion = () => {
   }, [preaudit]);
 
   return (
-    <div className={`pt-[50px]`}>
+    <div className={`2xl:pb-10 pb-5 2xl:pt-[50px] pt-5`}>
       <div className="max-w-full w-full 2xl:mx-auto">
         <div
           className={`relative flex flex-col justify-between h-full gap-[30px] ${
             isLoading2 || loading || isLoading3
-              ? "min-h-[calc(100vh-247px)]"
+              ? "2xl:min-h-[calc(100vh-247px)] min-h-[calc(100vh-181px)]"
               : "min-h-[calc(100vh-389px)]"
           }`}
         >
           {isLoading2 || loading || isLoading3 ? (
-            <div className="flex items-center justify-center w-full h-full min-h-[calc(100vh-311px)]">
+            <div className="flex items-center justify-center w-full h-full 2xl:min-h-[calc(100vh-311px)] min-h-[calc(100vh-245px)]">
               <LoaderIcon className="!w-12 !h-12 !border-r-[#106FEC]" />
             </div>
           ) : (
             <>
-              <div className="mb-6">
+              <div className="2xl:mb-6">
                 <h3 className="text-[16px] leading-6 font-[600] mb-3 text-[#000]">
                   Unit {unit}
                 </h3>
@@ -255,7 +255,7 @@ const PreAuditDocumentaion = () => {
                   Company Details
                 </h3>
                 <div className="flex flex-wrap -mx-3">
-                  <div className="w-full md:w-1/4 px-3 mb-6 md:mb-5 relative">
+                  <div className="w-full md:w-1/4 px-3 mb-4 2xl:mb-5 relative">
                     <InputWithLabel
                       type="text"
                       label={t("companyName")}
@@ -267,7 +267,7 @@ const PreAuditDocumentaion = () => {
                       readOnly
                     />
                   </div>
-                  <div className="w-full md:w-3/4 px-3 mb-6 md:mb-5 relative">
+                  <div className="w-full md:w-3/4 px-3 mb-4 2xl:mb-5 relative">
                     <InputWithLabel
                       type="text"
                       label={t("Address")}
@@ -281,7 +281,7 @@ const PreAuditDocumentaion = () => {
                   </div>
                 </div>
                 <div className="flex flex-wrap -mx-3">
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     <InputWithLabel
                       type="text"
                       label={t("city")}
@@ -294,7 +294,7 @@ const PreAuditDocumentaion = () => {
                     />
                   </div>
                   <div className="w-full md:w-1/3 px-3 mb-6 md:mb-5 relative">
-                    <label className="text-[16px] font-[400] leading-[18px] mb-1">
+                    <label className="2xl:text-[16px] text-[14px] font-[400] leading-[18px] mb-1">
                       {t("country")}
                     </label>
                     <ComboBox
@@ -310,7 +310,7 @@ const PreAuditDocumentaion = () => {
                       readOnly
                     />
                   </div>
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     <InputWithLabel
                       type="text"
                       label={t("zip")}
@@ -323,8 +323,8 @@ const PreAuditDocumentaion = () => {
                     />
                   </div>
                 </div>
-                <div className="flex flex-wrap -mx-3 mb-6">
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                <div className="flex flex-wrap -mx-3 2xl:mb-6 mb-5">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     <InputWithLabel
                       type="text"
                       label={t("contactPerson")}
@@ -336,7 +336,7 @@ const PreAuditDocumentaion = () => {
                       readOnly
                     />
                   </div>
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     <InputWithLabel
                       type="text"
                       label={t("p_phone")}
@@ -348,7 +348,7 @@ const PreAuditDocumentaion = () => {
                       readOnly
                     />
                   </div>
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     <InputWithLabel
                       type="text"
                       label={t("email")}
@@ -364,7 +364,7 @@ const PreAuditDocumentaion = () => {
                 <h3 className="text-[16px] leading-6 font-[500] mb-5 text-[#000]">
                   Certification & Processes
                 </h3>
-                <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="flex flex-wrap -mx-3 2xl:mb-6 mb-5">
                   <div className="w-full md:w-1/3 px-3 relative">
                     <InputWithLabel
                       type="text"
@@ -466,22 +466,6 @@ const PreAuditDocumentaion = () => {
                             }
                             onChange={(e) => handleChanges(e, index)}
                           />
-
-                          {/* <label
-                            htmlFor={`document_${index}`}
-                            className="cursor-pointer w-fit flex items-center gap-[10px] outline-none mt-[26px]"
-                          >
-                            <HiUpload size={20} color="#106FEC" />
-                            <span>Choose File</span>
-                          </label>
-                          <input
-                            type="file"
-                            name={`document_${index}`}
-                            accept=".pdf"
-                            id={`document_${index}`}
-                            onChange={(e) => handleFile(e, index)}
-                            className="py-[8px] text-[14px] hidden w-[100px]"
-                          /> */}
                           {preAudit?.[+unit - 1]?.standards?.[index]
                             ?.document && (
                             <p className="flex items-center gap-2 mt-[26px]">
@@ -507,7 +491,7 @@ const PreAuditDocumentaion = () => {
                     ))}
 
                 <div className="flex flex-wrap -mx-3">
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     <InputWithLabel
                       type="number"
                       min={1}
@@ -520,7 +504,7 @@ const PreAuditDocumentaion = () => {
                       onChange={(e) => handleChange2(e)}
                     />
                   </div>
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     <InputWithLabel
                       type="number"
                       min={1}
@@ -533,7 +517,7 @@ const PreAuditDocumentaion = () => {
                       onChange={(e) => handleChange2(e)}
                     />
                   </div>
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     <InputWithLabel
                       type="number"
                       min={1}
@@ -548,7 +532,7 @@ const PreAuditDocumentaion = () => {
                   </div>
                 </div>
                 <div className="flex flex-wrap -mx-3">
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     <InputWithLabel
                       type="number"
                       min={1}
@@ -561,7 +545,7 @@ const PreAuditDocumentaion = () => {
                       onChange={(e) => handleChange2(e)}
                     />
                   </div>
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     <InputWithLabel
                       type="number"
                       min={1}
@@ -574,7 +558,7 @@ const PreAuditDocumentaion = () => {
                       onChange={(e) => handleChange2(e)}
                     />
                   </div>
-                  <div className="w-full md:w-1/3 px-3 md:mb-5 relative">
+                  <div className="w-full md:w-1/3 px-3 2xl:mb-5 mb-4 relative">
                     {preAudit?.[+unit - 1]?.afl ? (
                       <>
                         <label className="block tracking-wide text-black text-[16px] font-[400] mb-2 leading-[18px]">
@@ -588,46 +572,10 @@ const PreAuditDocumentaion = () => {
                           >
                             {preAudit?.[+unit - 1]?.afl.split("/").pop()}
                           </Link>
-                          {/* <span
-                            className="cursor-pointer"
-                            onClick={() =>
-                              setPreAudit((prev) => {
-                                return prev.map((item, idx) => {
-                                  if (idx === +unit - 1) {
-                                    return {
-                                      ...item,
-                                      afl: "",
-                                    };
-                                  }
-                                  return item;
-                                });
-                              })
-                            }
-                          >
-                            <IoClose />
-                          </span> */}
                         </div>
                       </>
                     ) : (
-                      <>
-                        {/* <label
-                          htmlFor="afl"
-                          className="text-[16px] font-Roboto font-[500] leading-[18px] text-[#fff] py-[9px] px-5 bg-[#106FEC] rounded-[2px] w-[180px] flex items-center justify-center gap-2 mt-[26px] cursor-pointer"
-                        >
-                          <HiUpload size={20} color="#fff" /> Upload AFL
-                        </label>
-                        <input
-                          type="file"
-                          name="afl"
-                          id="afl"
-                          accept=".pdf"
-                          onChange={(e) => handleFile3(e)}
-                          className="py-[8px] text-[14px] hidden w-[100px]"
-                        />
-                        <p className="font-[300] text-[12px] font-Roboto mt-[6px]">
-                          (To download AFL Format click on link)
-                        </p> */}
-                      </>
+                      <></>
                     )}
                   </div>
                 </div>
@@ -659,55 +607,9 @@ const PreAuditDocumentaion = () => {
                                 .split("/")
                                 .pop()}
                             </Link>
-
-                            {/* <span
-                              className="cursor-pointer"
-                              onClick={() =>
-                                setDoc((prev) => {
-                                  return prev.map((item, idx) => {
-                                    if (idx === +unit - 1) {
-                                      return {
-                                        ...item,
-                                        documents: item.documents.map(
-                                          (item2, idx2) => {
-                                            if (idx2 === i) {
-                                              return {
-                                                ...item2,
-                                                document: "",
-                                              };
-                                            }
-                                            return item2;
-                                          }
-                                        ),
-                                      };
-                                    }
-                                    return item;
-                                  });
-                                })
-                              }
-                            >
-                              <IoClose />
-                            </span> */}
                           </p>
                         ) : (
-                          <>
-                            {/* <label
-                              htmlFor="file"
-                              onClick={() => setFlieValue(i)}
-                              className="cursor-pointer flex items-center gap-[10px] outline-none"
-                            >
-                              <HiUpload size={20} color="#106FEC" />{" "}
-                              <span>Choose File</span>
-                            </label>
-                            <input
-                              type="file"
-                              name="file"
-                              accept=".pdf"
-                              id="file"
-                              onChange={(e) => handleFile2(e)}
-                              className="py-[8px] text-[14px] hidden w-[100px]"
-                            /> */}
-                          </>
+                          <></>
                         )}
                       </div>
                       <ComboBox

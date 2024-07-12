@@ -8,7 +8,7 @@ const DataTable = ({
   data,
   renderRowActions = null,
   option = null,
-  handleCheck,
+  responsive,
 }) => {
   const extendedData = {
     ...data,
@@ -43,7 +43,11 @@ const DataTable = ({
   };
 
   return (
-    <div className="text-left min-w-[1200px] w-full overflow-auto">
+    <div
+      className={`text-left ${
+        responsive && "min-w-[1400px] w-full overflow-auto"
+      }`}
+    >
       <MDBDataTable
         striped
         bordered

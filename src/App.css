@@ -45,11 +45,13 @@
 }
 
 .dataTable tbody tr td {
-  padding: 10px 0;
+  padding: 10px 10px 10px 0;
   font-size: 14px;
   max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   line-height: 30px;
-  text-wrap: balance;
 }
 
 .mdb-datatable-filter,
@@ -60,7 +62,7 @@
 .pagination {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 }
 
 .disabled.page-item {
@@ -83,7 +85,6 @@
   justify-content: center;
   border: 1px solid #c4c4c4;
 }
-
 
 .page-item:first-child .page-link,
 .page-item:last-child .page-link {

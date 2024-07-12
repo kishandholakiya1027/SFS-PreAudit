@@ -170,11 +170,11 @@ const AuditorDetails = () => {
       ) : (
         <div>
           <div className="flex flex-wrap">
-            <div className="w-1/3 mb-6 px-3 relative">
+            <div className="w-1/3 2xl:mb-5 mb-4 px-3 relative">
               <div>
                 <label
                   htmlFor="from"
-                  className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                  className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
                 >
                   Date From
                 </label>
@@ -184,7 +184,7 @@ const AuditorDetails = () => {
                   id="from"
                   onChange={handleChange}
                   value={data?.from}
-                  className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                  className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                   placeholder="Enter company name"
                 />
               </div>
@@ -194,11 +194,11 @@ const AuditorDetails = () => {
                 </p>
               )}
             </div>
-            <div className="w-1/3 mb-6 px-3 relative">
+            <div className="w-1/3 2xl:mb-5 mb-4 px-3 relative">
               <div>
                 <label
                   htmlFor="to"
-                  className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                  className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
                 >
                   Date To
                 </label>
@@ -208,7 +208,7 @@ const AuditorDetails = () => {
                   id="to"
                   onChange={handleChange}
                   value={data?.to}
-                  className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                  className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                   placeholder="Enter company name"
                 />
               </div>
@@ -222,11 +222,11 @@ const AuditorDetails = () => {
           {show && (
             <>
               <div className="flex flex-wrap">
-                <div className="w-1/3 mb-6 px-3 relative">
+                <div className="w-1/3 2xl:mb-5 mb-4 px-3 relative">
                   <div>
                     <label
                       htmlFor="name"
-                      className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                      className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
                     >
                       Auditor Name
                     </label>
@@ -247,11 +247,11 @@ const AuditorDetails = () => {
                     </p>
                   )}
                 </div>
-                <div className="w-1/3 mb-6 px-3 relative">
+                <div className="w-1/3 2xl:mb-5 mb-4 px-3 relative">
                   <div>
                     <label
                       htmlFor="contact"
-                      className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                      className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
                     >
                       Contact No
                     </label>
@@ -261,7 +261,7 @@ const AuditorDetails = () => {
                       id="contact"
                       onChange={handleChange}
                       value={data?.contact}
-                      className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                      className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                       placeholder="Enter contact no"
                     />
                   </div>
@@ -271,11 +271,11 @@ const AuditorDetails = () => {
                     </p>
                   )}
                 </div>
-                <div className="w-1/3 mb-6 px-3 relative">
+                <div className="w-1/3 2xl:mb-5 mb-4 px-3 relative">
                   <div>
                     <label
                       htmlFor="email"
-                      className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                      className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
                     >
                       Email Address
                     </label>
@@ -285,7 +285,7 @@ const AuditorDetails = () => {
                       id="email"
                       onChange={handleChange}
                       value={data?.email}
-                      className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                      className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                       placeholder="Enter email address"
                     />
                   </div>

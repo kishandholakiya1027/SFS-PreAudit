@@ -25,7 +25,7 @@ const ReviewerProjectMain = () => {
 
   return (
     <div>
-      <div className="w-full rounded p-[40px] h-[calc(100vh-57px)] overflow-auto bg-[#F9FCFF]">
+      <div className="w-full rounded 2xl:p-10 p-6 !pb-0 h-[calc(100vh-57px)] overflow-auto bg-[#F9FCFF]">
         <ul
           className={`flex items-center gap-[40px] ${
             location.pathname?.includes(tabs)

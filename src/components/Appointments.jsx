@@ -1,7 +1,7 @@
 import React from "react";
-import {BiCaretRight} from "react-icons/bi";
-import {BsArrowRight} from "react-icons/bs";
-import {MdAddCircleOutline} from "react-icons/md";
+import { BiCaretRight } from "react-icons/bi";
+import { BsArrowRight } from "react-icons/bs";
+import { MdAddCircleOutline } from "react-icons/md";
 
 const data = [
   {
@@ -108,12 +108,12 @@ const data = [
 
 const Appointments = () => {
   return (
-    <div className="mb-[24px]">
+    <div className="2xl:mb-[24px] mb-5">
       <div className="flex items-center justify-between mb-[10px]">
-        <h3 className="text-[14px] font-[500] text-[#323232]">
+        <h3 className="2xl:text-[14px] text-[12px] font-[500] text-[#323232]">
           Upcoming Appointments
         </h3>
-        <MdAddCircleOutline className="w-[21px] h-[21px] text-[#106FEC]" />
+        <MdAddCircleOutline className="2xl:w-[21px] 2xl:h-[21px] w-4 h-4 text-[#106FEC]" />
       </div>
       <div className="bg-[#fff] rounded-[10px] border-2 border-[#EFF6FE] p-[30px]">
         <div className="">

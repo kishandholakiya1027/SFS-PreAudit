@@ -34,12 +34,14 @@ const Notification = ({ setNotification }) => {
   return (
     <div>
       <div className="flex items-center justify-between mb-[10px]">
-        <h3 className="text-[14px] font-[500] text-[#323232]">Notification</h3>
+        <h3 className="2xl:text-[14px] text-[12px] font-[500] text-[#323232]">
+          Notification
+        </h3>
         <button onClick={() => setNotification(true)}>
-          <MdAddCircleOutline className="w-[21px] h-[21px] text-[#106FEC]" />
+          <MdAddCircleOutline className="2xl:w-[21px] 2xl:h-[21px] w-4 h-4 text-[#106FEC]" />
         </button>
       </div>
-      <div className="bg-[#fff] rounded-[10px] border-2 border-[#EFF6FE] p-[30px] flex flex-col justify-between h-full 2xl:min-h-[420px] min-h-[508px]">
+      <div className="bg-[#fff] rounded-[10px] border-2 border-[#EFF6FE] 2xl:p-[30px] p-4 flex flex-col justify-between h-full 2xl:max-h-[420px] max-h-[508px]">
         {loading ? (
           <div className="flex items-center justify-center w-full h-full min-h-[331px]">
             <LoaderIcon className="!w-[18px] !h-[18px] !border-r-[#106FEC]" />

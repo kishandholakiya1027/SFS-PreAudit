@@ -24,12 +24,14 @@ const data = [
 
 const TeamMember = () => {
   return (
-    <div className="mb-[24px]">
+    <div className="2xl:mb-[24px] mb-5">
       <div className="flex items-center justify-between mb-[10px]">
-        <h3 className="text-[14px] font-[500] text-[#323232]">Team Members</h3>
-        <MdAddCircleOutline className="w-[21px] h-[21px] text-[#106FEC]" />
+        <h3 className="2xl:text-[14px] text-[12px] font-[500] text-[#323232]">
+          Team Members
+        </h3>
+        <MdAddCircleOutline className="2xl:w-[21px] 2xl:h-[21px] w-4 h-4 text-[#106FEC]" />
       </div>
-      <div className="bg-[#fff] rounded-[10px] border-2 border-[#EFF6FE] grid 2xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 p-[22px] gap-[40px]">
+      <div className="bg-[#fff] rounded-[10px] border-2 border-[#EFF6FE] grid lg:grid-cols-4 grid-cols-2 2xl:p-[22px] p-4 xl:gap-4 2xl:gap-8 gap-2">
         {data.map((item, i) => (
           <div className="col-span-1 flex items-center gap-[14px]" key={i}>
             <div>

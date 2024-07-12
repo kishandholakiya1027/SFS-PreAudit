@@ -11,21 +11,12 @@ import { LoaderIcon } from "react-hot-toast";
 import { GetReviewe } from "../store/action/SendRevieweAction";
 import moment from "moment";
 
-const tabs = [
-  {
-    id: "1",
-    label: "Application List",
-    link: "/pre_audit/project",
-    content: "Content for Tab 1",
-  },
-];
-
 const AccountantProject = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const dispatch = useDispatch();
   const { state, pathname } = useLocation();
   const navigate = useNavigate();
-  const { id, type } = useParams();
+  const { id } = useParams();
   const [isId, setIsId] = useState("");
   const [loading, setLoading] = useState(true);
   const { setActiveTab } = useContext(TabContext);
@@ -47,7 +38,7 @@ const AccountantProject = () => {
     columns: [
       {
         label: (
-          <div className="flex gap-3 cursor-pointer">
+          <div className="flex gap-3 cursor-pointer w-[119px]">
             Application ID <img src={Sort} alt="Sort" />
           </div>
         ),
@@ -57,7 +48,7 @@ const AccountantProject = () => {
       },
       {
         label: (
-          <div className="flex gap-3 cursor-pointer">
+          <div className="flex gap-3 cursor-pointer w-[206px]">
             Application Received Date
             <img src={Sort} alt="Sort" />
           </div>
@@ -68,7 +59,7 @@ const AccountantProject = () => {
       },
       {
         label: (
-          <div className="flex gap-3 cursor-pointer">
+          <div className="flex gap-3 cursor-pointer w-[200px]">
             Company Name <img src={Sort} alt="Sort" />
           </div>
         ),
@@ -78,7 +69,7 @@ const AccountantProject = () => {
       },
       {
         label: (
-          <div className="flex gap-3 cursor-pointer">
+          <div className="flex gap-3 cursor-pointer w-[100px]">
             STD <img src={Sort} alt="Sort" />
           </div>
         ),
@@ -88,7 +79,7 @@ const AccountantProject = () => {
       },
       {
         label: (
-          <div className="flex gap-3 cursor-pointer">
+          <div className="flex gap-3 cursor-pointer w-[100px]">
             Reviewer <img src={Sort} alt="Sort" />
           </div>
         ),
@@ -98,7 +89,7 @@ const AccountantProject = () => {
       },
       {
         label: (
-          <div className="flex gap-3 cursor-pointer">
+          <div className="flex gap-3 cursor-pointer w-[100px]">
             Status <img src={Sort} alt="Sort" />
           </div>
         ),
@@ -202,34 +193,11 @@ const AccountantProject = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-57px)] p-[40px] pt-[37px] pb-[30px] bg-[#F9FCFF]">
+    <div className="2xl:p-10 p-6 bg-[#F9FCFF] h-full min-h-[calc(100vh-57px)]">
       <div className="w-full rounded pt-0 pl-0">
-        <ul
-          className={`flex items-center gap-[40px] border-b border-[#D2D8DD]`}
-        >
-          {tabs.length > 0 &&
-            tabs.map((item, i) => {
-              return (
-                <li key={i}>
-                  <button
-                    type="button"
-                    disabled={
-                      (type && id) || pathname.includes("send-invoice")
-                        ? true
-                        : false
-                    }
-                    onClick={() => {
-                      handleTabClick(item.id);
-                      navigate(item.link);
-                    }}
-                    className={`px-3 py-4 text-[16px] font-[500] border-b-[5px] text-[#106FEC] border-transparent leading-6`}
-                  >
-                    {item.label}
-                  </button>
-                </li>
-              );
-            })}
-        </ul>
+        <h1 className="pb-[15px] text-[16px] leading-[24px] border-b text-[#106FEC] rounded-t font-[600]">
+          Application List
+        </h1>
         {loading ? (
           <div className="flex items-center justify-center w-full h-full min-h-[calc(100vh-186px)]">
             <LoaderIcon className="!w-12 !h-12 !border-r-[#106FEC]" />

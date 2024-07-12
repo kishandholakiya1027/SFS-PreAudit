@@ -11,7 +11,7 @@ const InputWithLabel = forwardRef(
       <div>
         {label && (
           <label
-            className={` block tracking-wide text-black text-[16px] font-[400] mb-2 leading-[18px] ${
+            className={`block tracking-wide text-black 2xl:text-[16px] text-[14px] font-[400] mb-2 leading-[18px] ${
               className3 && className3
             }`}
             htmlFor={id}

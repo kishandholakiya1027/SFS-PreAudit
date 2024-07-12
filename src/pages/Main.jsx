@@ -27,7 +27,9 @@ const Main = () => {
           notification={notification}
           setNotification={setNotification}
         />
-        <Outlet context={{ notification, setNotification }} />
+        <div className="pt-[57px]">
+          <Outlet context={{ notification, setNotification }} />
+        </div>
       </main>
     </div>
   );

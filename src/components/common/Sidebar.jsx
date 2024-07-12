@@ -35,11 +35,11 @@ const Sidebar = () => {
       >
         <Link
           to="/pre_audit/dashboard"
-          className="py-12 flex justify-center text-[18px] font-[600] leading-[27px]"
+          className={`2xl:my-12 my-4 flex justify-center text-[18px] font-[600] leading-[27px]`}
         >
           SFS Logo
         </Link>
-        <div className="flex justify-center items-center flex-col gap-4 relative text-white">
+        <div className="flex justify-center items-center flex-col 2xl:gap-4 gap-2 relative text-white">
           {menus?.length &&
             menus?.map((menu, i) => (
               <Link

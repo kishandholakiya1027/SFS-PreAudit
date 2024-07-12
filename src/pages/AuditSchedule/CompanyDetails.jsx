@@ -85,11 +85,11 @@ const CompanyDetails = () => {
         </div>
       ) : (
         <div className="flex flex-wrap items-center">
-          <div className="w-1/3 mb-5 px-3">
+          <div className="w-1/3 2xl:mb-5 mb-4 px-3">
             <div>
               <label
                 htmlFor="company_name"
-                className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
               >
                 Company Name
               </label>
@@ -101,16 +101,16 @@ const CompanyDetails = () => {
                   setFdata({ ...fdata, company_name: e.target.value })
                 }
                 value={fdata?.company_name}
-                className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                 placeholder="Enter company name"
               />
             </div>
           </div>
-          <div className="w-1/3 mb-5 px-3">
+          <div className="w-1/3 2xl:mb-5 mb-4 px-3">
             <div>
               <label
                 htmlFor="p_phone"
-                className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
               >
                 Contact No
               </label>
@@ -122,16 +122,16 @@ const CompanyDetails = () => {
                   setFdata({ ...fdata, p_phone: e.target.value })
                 }
                 value={fdata?.p_phone}
-                className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                 placeholder="Enter phone number"
               />
             </div>
           </div>
-          <div className="w-full mb-5 px-3">
+          <div className="w-full 2xl:mb-5 mb-4 px-3">
             <div>
               <label
                 htmlFor="address"
-                className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
               >
                 Address
               </label>
@@ -143,16 +143,16 @@ const CompanyDetails = () => {
                   setFdata({ ...fdata, address: e.target.value })
                 }
                 value={fdata?.address}
-                className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                 placeholder="Enter address"
               />
             </div>
           </div>
-          <div className="w-1/3 mb-5 px-3">
+          <div className="w-1/3 2xl:mb-5 mb-4 px-3">
             <div>
               <label
                 htmlFor="company_name"
-                className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
               >
                 City
               </label>
@@ -162,16 +162,16 @@ const CompanyDetails = () => {
                 id="city"
                 onChange={(e) => setFdata({ ...fdata, city: e.target.value })}
                 value={fdata?.city}
-                className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                 placeholder="Enter city"
               />
             </div>
           </div>
-          <div className="w-1/3 mb-5 px-3">
+          <div className="w-1/3 2xl:mb-5 mb-4 px-3">
             <div>
               <label
                 htmlFor="region"
-                className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
               >
                 Region
               </label>
@@ -181,16 +181,16 @@ const CompanyDetails = () => {
                 id="region"
                 onChange={(e) => setFdata({ ...fdata, region: e.target.value })}
                 value={fdata?.region}
-                className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                 placeholder="Enter region"
               />
             </div>
           </div>
-          <div className="w-1/3 mb-5 px-3">
+          <div className="w-1/3 2xl:mb-5 mb-4 px-3">
             <div>
               <label
                 htmlFor="country"
-                className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
               >
                 Country
               </label>
@@ -200,16 +200,16 @@ const CompanyDetails = () => {
                 id="country"
                 onChange={(e) => setCname(e.target.value)}
                 value={cName}
-                className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                 placeholder="Enter country"
               />
             </div>
           </div>
-          <div className="w-1/3 mb-5 px-3">
+          <div className="w-1/3 2xl:mb-5 mb-4 px-3">
             <div>
               <label
                 htmlFor="standards"
-                className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
               >
                 Standard
               </label>
@@ -219,16 +219,16 @@ const CompanyDetails = () => {
                 id="standards"
                 onChange={(e) => setStandards(e.target.value)}
                 value={standards}
-                className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                 placeholder="Enter standards"
               />
             </div>
           </div>
-          <div className="w-1/3 mb-5 px-3">
+          <div className="w-1/3 2xl:mb-5 mb-4 px-3">
             <div>
               <label
                 htmlFor="processeUnit"
-                className="mb-[6px] text-[16px] leading-[18px] font-[400] font-Roboto"
+                className="mb-[6px] 2xl:text-[16px] text-[14px] leading-[18px] font-[400] font-Roboto"
               >
                 Process
               </label>
@@ -238,7 +238,7 @@ const CompanyDetails = () => {
                 id="processeUnit"
                 onChange={(e) => setProcesseUnit(e.target.value)}
                 value={processeUnit}
-                className="block w-full text-black border border-[#D2D8DD] sm:text-sm sm:leading-4 p-2 bg-white rounded-sm"
+                className="block w-full text-black border border-[#D2D8DD] 2xl:text-sm text-[12px] sm:leading-4 p-2 bg-white rounded-sm"
                 placeholder="Enter processe unit"
               />
             </div>

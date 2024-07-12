@@ -30,27 +30,36 @@ const TeamMember = () => {
   }, [dispatch]);
 
   return (
-    <div className="mb-[24px]">
+    <div className="2xl:mb-[24px] mb-5">
       <div className="flex items-center justify-between mb-[10px]">
-        <h3 className="text-[14px] font-[500] text-[#323232]">Team Members</h3>
-        <MdAddCircleOutline className="w-[21px] h-[21px] text-[#106FEC]" />
+        <h3 className="2xl:text-[14px] text-[12px] font-[500] text-[#323232]">
+          Team Members
+        </h3>
+        <MdAddCircleOutline className="2xl:w-[21px] 2xl:h-[21px] w-4 h-4 text-[#106FEC]" />
       </div>
-      <div className="bg-[#fff] rounded-[10px] border-2 border-[#EFF6FE] grid 2xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 p-[22px] gap-[40px]">
+      <div className="bg-[#fff] rounded-[10px] border-2 border-[#EFF6FE] grid lg:grid-cols-4 grid-cols-2 2xl:p-[22px] p-4 xl:gap-4 2xl:gap-8 gap-2">
         {loading ? (
-          <div className="flex items-center justify-center w-full h-full col-span-4 min-h-[49px]">
+          <div className="flex items-center justify-center w-full h-full col-span-4 min-h-[40px]">
             <LoaderIcon className="!w-[18px] !h-[18px] !border-r-[#106FEC]" />
           </div>
         ) : (
           data?.slice(0, 4)?.map((item, i) => (
-            <div className="col-span-1 flex items-center gap-[14px]" key={i}>
+            <div
+              className="col-span-1 flex items-center 2xl:gap-[14px] gap-[10px]"
+              key={i}
+            >
               <div>
-                <img src={images[i]} alt="images" />
+                <img
+                  src={images[i]}
+                  alt="images"
+                  className="2xl:w-[49px] 2xl:h-[49px] w-10 h-10"
+                />
               </div>
               <div>
-                <h4 className="text-[14px] font-[500] -tracking-[0.28px]">
+                <h4 className="2xl:text-[14px] text-[12px] font-[500] -tracking-[0.28px]">
                   {item.name}
                 </h4>
-                <p className="text-[12px] font-[300] text-[#A5A6A9] -tracking-[0.24px]">
+                <p className="2xl:text-[12px] text-[10px] font-[300] text-[#A5A6A9] -tracking-[0.24px]">
                   {item.role}
                 </p>
               </div>
