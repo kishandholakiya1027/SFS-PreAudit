@@ -257,7 +257,7 @@ const ClientDashboard = () => {
       </div>
       <div className="2xl:mt-10 mt-5 grid grid-cols-8 2xl:gap-9 gap-6">
         <div className="col-span-5">
-          <TeamMember />
+          {/* <TeamMember /> */}
           <DashCompany />
         </div>
         <div className="col-span-3">
