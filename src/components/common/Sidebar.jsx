@@ -31,7 +31,7 @@ const Sidebar = () => {
       <div
         className={`bg-[#106FEC] min-h-screen ${
           open ? "w-72" : "w-[140px]"
-        } duration-500 text-gray-100 px-4`}
+        } text-gray-100 px-4`}
       >
         <Link
           to="/pre_audit/dashboard"
@@ -45,8 +45,9 @@ const Sidebar = () => {
               <Link
                 to={menu?.link}
                 key={i}
-                className={`sideMenu ${menu?.margin && "mt-5"}
-                                group flex items-center flex-col text-[12px] leading-[18px] font-600 gap-[10px] font-medium p-[8px] rounded-md text-[#fff]`}
+                className={`sideMenu ${
+                  menu?.margin && "mt-5"
+                } group flex items-center flex-col text-[12px] leading-[18px] font-600 gap-[10px] font-medium p-[8px] rounded-md text-[#fff]`}
               >
                 <div
                   className={`flex items-center justify-center ${
@@ -66,10 +67,7 @@ const Sidebar = () => {
                   />
                 </div>
                 <h2
-                  style={{
-                    transitionDelay: `${i + 3}00ms`,
-                  }}
-                  className={`whitespace-pre duration-500 text-[#fff] text-[12px] font-[600] leading-[18px]`}
+                  className={`whitespace-pre text-[#fff] text-[12px] font-[600] leading-[18px]`}
                 >
                   {menu?.name}
                 </h2>
