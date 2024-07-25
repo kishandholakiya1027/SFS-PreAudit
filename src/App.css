@@ -33,10 +33,10 @@
 }
 
 .dataTable thead tr th {
-  padding: 10px 0;
+  padding: 10px 10px 10px 0;
   color: #000;
   text-align: left;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -46,7 +46,7 @@
 
 .dataTable tbody tr td {
   padding: 10px 10px 10px 0;
-  font-size: 14px;
+  font-size: 12px;
   max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -147,4 +147,8 @@
 
 .MuiStepConnector-line {
   border-color: #106fec !important;
+}
+
+.dataTables_info {
+  display: none;
 }

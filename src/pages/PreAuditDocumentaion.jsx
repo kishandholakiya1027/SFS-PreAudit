@@ -13,6 +13,7 @@ import { GetCountry } from "../store/action/countryAction";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import InputWithLabel from "../components/common/InputWithLabel";
 import { getOneAudit } from "../store/action/preAuditAction";
+import Demo from "./Demo";
 
 const docs1 = [
   {
@@ -372,11 +373,14 @@ const PreAuditDocumentaion = () => {
                       placeholder="Enter Process Type"
                       name="process"
                       id="process"
-                      value={Object.keys(
-                        payer?.units?.[+unit - 1]?.processeUnit
-                      ).filter(
-                        (key) => payer?.units?.[+unit - 1]?.processeUnit[key]
-                      )}
+                      value={
+                        payer?.units?.[+unit - 1]?.processeUnit &&
+                        Object.keys(
+                          payer?.units?.[+unit - 1]?.processeUnit
+                        ).filter(
+                          (key) => payer?.units?.[+unit - 1]?.processeUnit[key]
+                        )
+                      }
                       readOnly
                       disabled
                     />
@@ -634,6 +638,7 @@ const PreAuditDocumentaion = () => {
                   ))}
                 </div>
               </div>
+              <Demo url={preAudit?.[+unit - 1]?.afl} />
             </>
           )}
           <div className="flex items-center justify-end">

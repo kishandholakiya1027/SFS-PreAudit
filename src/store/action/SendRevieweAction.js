@@ -12,7 +12,7 @@ import { updateCurrentStep } from "./CurrentStep";
 export const GetReviewe = (setLoading) => {
   return async (dispatch) => {
     try {
-      const CurrencyData = await api(`/client/all`, "get");
+      const CurrencyData = await api(`/client/audit`, "get");
 
       if (CurrencyData.status === 200) {
         setLoading(false);
