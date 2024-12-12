@@ -22,6 +22,45 @@ const Login = () => {
     password: "",
   });
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+     
+    const email = urlParams.get('email');
+    const id = urlParams.get('id');
+    const name = urlParams.get('name');
+    const accessToken1 = urlParams.get('accessToken');
+    const refreshToken1 = urlParams.get('refreshToken');
+    const deviceid = urlParams.get('deviceid');
+
+    if (accessToken1) {
+      localStorage.setItem("accessToken", JSON.stringify(accessToken1));
+      console.log(localStorage.getItem("accessToken"));
+    }
+    if (refreshToken1) {
+      localStorage.setItem("refreshToken", JSON.stringify(refreshToken1));
+      console.log(localStorage.getItem("refreshToken"));
+    }
+    if (deviceid) {
+      localStorage.setItem("deviceid", JSON.stringify(deviceid));
+      console.log(localStorage.getItem("deviceid"));
+    }
+    if(email && id && name){
+      localStorage.setItem(
+        "admin",
+        JSON.stringify({
+          id: +id,
+          name: name,
+          email: email,
+        })
+      );
+      navigate("/pre_audit/dashboard");
+      Cookies.set("expire", moment.utc().format("YYYY-MM-DD HH:mm:ss.SSS[Z]"), {
+        expires: 1,
+      });
+    }
+    
+  }, [])
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAdmin((prev) => ({ ...prev, [name]: value }));
